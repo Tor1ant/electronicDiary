@@ -13,9 +13,9 @@ spring:
     init:
       mode: always
   datasource:
-    url: ${SPRING_DATASOURCE_MAIN:jdbc:postgresql://localhost:5432/ElectronicDiary}
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:3050}
+    url: ${SPRING_DATASOURCE_MAIN:jdbc:postgresql://localhost:5433/ElectronicDiary}
+    username: ${POSTGRES_USER:user}
+    password: ${POSTGRES_PASSWORD:pass}
     driver-class-name: org.postgresql.Driver
 logging:
   level:
