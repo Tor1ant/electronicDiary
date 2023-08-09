@@ -3,7 +3,7 @@ server:
 spring:
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
@@ -14,8 +14,8 @@ spring:
       mode: always
   datasource:
     url: ${SPRING_DATASOURCE_MAIN:jdbc:postgresql://localhost:5432/ElectronicDiary}
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:3050}
+    username: ${POSTGRES_USER:user}
+    password: ${POSTGRES_PASSWORD:pass}
     driver-class-name: org.postgresql.Driver
 logging:
   level:
