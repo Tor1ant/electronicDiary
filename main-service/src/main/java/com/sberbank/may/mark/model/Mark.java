@@ -8,6 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
+@Table(name = "mark_lesson_student")
 @Data
 public class Mark {
     @Id
