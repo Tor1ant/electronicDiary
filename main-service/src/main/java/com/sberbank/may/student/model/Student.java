@@ -2,8 +2,10 @@ package com.sberbank.may.student.model;
 
 import com.sberbank.may.lesson.model.Lesson;
 import com.sberbank.may.mark.model.Mark;
+import com.sberbank.may.studentClass.model.StudentClass;
 import com.sberbank.may.user.model.User;
 import jakarta.persistence.*;
+import java.util.Set;
 import lombok.Data;
 
 import java.util.List;
@@ -17,14 +19,25 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    //продумать связь many to many
-    @ManyToOne
-    private User user;
+    @ManyToMany()
+    @JoinTable(
+            name = "student_user",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private Set<User> user;
 
     @ManyToMany
     private List<Lesson> lessons;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "mark_lesson_student",
+            joinColumns = {@JoinColumn(name = "student_id")},
+            inverseJoinColumns = {@JoinColumn(name = "lesson_id")}
+    )
     private List<Mark> marks;
 
+    @ManyToOne
+    private StudentClass studentClass;
 }

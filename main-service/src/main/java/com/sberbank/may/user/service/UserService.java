@@ -10,4 +10,10 @@ public interface UserService {
     void saveUser(User user);
 
     List<User> searchUser(UserDto userDto);
+
+    void deleteById(long id);
+
+    User findUserById(long id);
+
+    User patchUser(User user);
 }

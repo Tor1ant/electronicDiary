@@ -17,6 +17,6 @@ public class Mark {
     private int value;
     @ManyToMany
     private List<Lesson> lessons;
-    @ManyToMany
+    @ManyToMany(mappedBy = "marks")
     private List<Student> students;
 }
