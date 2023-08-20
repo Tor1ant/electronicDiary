@@ -15,5 +15,7 @@ public interface UserService {
 
     User findUserById(long id);
 
-    User patchUser(User user);
+    void patchUser(User user);
+
+    List<User> searchAllUser();
 }

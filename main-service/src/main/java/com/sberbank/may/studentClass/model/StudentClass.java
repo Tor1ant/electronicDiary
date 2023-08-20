@@ -1,9 +1,6 @@
 package com.sberbank.may.studentClass.model;
 
-import com.sberbank.may.predmet.model.Predmet;
-import com.sberbank.may.student.model.Student;
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.Data;
 
 @Entity

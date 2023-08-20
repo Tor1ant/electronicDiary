@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница администратора</title>
+</head>
+<body>
+<h1>Выберете действие:</h1>
+
+<form method="get" action="/class/classForm">
+    <br>
+    <button type="submit">Создать класс</button>
+</form>
+<form method="get" action="/class/searchClassForm">
+    <br>
+    <button type="submit">Найти класс</button>
+</form>
+<form method="get" action="/class/allClasses">
+    <br>
+    <button type="submit">Список классов</button>
+</form>
+<form method="get" action="/user/userForm">
+    <br>
+    <button type="submit">Создать пользователя</button>
+</form>
+<form method="get" action="/user/searchUserForm">
+    <br>
+    <button type="submit">Найти пользователя</button>
+</form>
+<form method="get" action="/user/allUsers">
+    <br>
+    <button type="submit">Список пользователей</button>
+</form>
+</body>
+</html>

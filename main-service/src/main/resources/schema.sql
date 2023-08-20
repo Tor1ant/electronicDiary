@@ -5,6 +5,7 @@ drop table if exists student_classes cascade;
 drop table if exists homeworks cascade;
 drop table if exists lessons cascade;
 drop table if exists mark_lesson_student cascade;
+drop table if exists student_user cascade;
 
 create table users
 (
