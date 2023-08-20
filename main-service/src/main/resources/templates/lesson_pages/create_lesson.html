@@ -7,7 +7,7 @@
 <body>
 <h2>Добавить новый урок</h2>
 <form th:object="${lesson}" method="post" action="/lesson/saveLesson">
-  <label for="lessonTime">Дата и время проведения урока в формате dd-mm-yy HH:mm:</label>
+  <label for="lessonTime">Дата и время проведения урока в формате dd-mm-yyyy HH:mm:</label>
   <input type="text" id="lessonTime" name="lessonTime" required />
   <br> <br>
   <label for="teacher">ФИО учителя:</label>

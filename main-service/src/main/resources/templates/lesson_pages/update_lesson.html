@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Lesson</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Изменение урока:</h2>
+
+<form th:object="${lesson}" th:action="@{/lesson/update}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+  <table>
+    <tr>
+      <td>Учитель:</td>
+      <td><input type="text" th:field="*{teacher.name}" /></td>
+    </tr>
+    <tr>
+      <td>Класс:</td>
+      <td><input type="text" th:field="*{studentClass.title}" /></td>
+    </tr>
+    <tr>
+      <td>Предмет:</td>
+      <td><input type="text" th:field="*{predmet.title}" /></td>
+    </tr>
+    <tr>
+      <td>Время урока:</td>
+      <td><input type="datetime-local" th:field="*{lessonTime}" /></td>
+    </tr>
+    <tr>
+      <td><button type="submit">Обновить</button></td>
+    </tr>
+  </table>
+</form>
+
+</body>
+</html>

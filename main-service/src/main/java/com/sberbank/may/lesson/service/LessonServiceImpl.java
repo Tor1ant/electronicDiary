@@ -1,6 +1,7 @@
 package com.sberbank.may.lesson.service;
 
 import com.sberbank.may.exception.NotFoundException;
+import com.sberbank.may.lesson.model.Homework;
 import com.sberbank.may.lesson.model.Lesson;
 import com.sberbank.may.lesson.repository.HomeworkRepository;
 import com.sberbank.may.lesson.repository.LessonRepository;
@@ -39,6 +40,9 @@ public class LessonServiceImpl implements LessonService {
         lesson.setTeacher(teacher);
         lesson.setStudentClass(studentClass);
         lesson.setPredmet(predmet);
+        if (lesson.getHomework().getDescription().isBlank()) {
+            lesson.getHomework().setDescription("Ничего не задано");
+        }
         homeworkRepository.save(lesson.getHomework());
         lessonRepository.save(lesson);
     }
@@ -53,5 +57,54 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public void deleteById(long id) {
         lessonRepository.deleteById(id);
+    }
+
+    @Override
+    public Lesson findLessonById(long id) {
+        return lessonRepository.findById(id).orElseThrow(() -> new NotFoundException("урок для изменения не найден"));
+    }
+
+    @Transactional
+    @Override
+    public void updateLesson(Lesson lesson) {
+        Lesson lessonForUpdate = findLessonById(lesson.getId());
+        User teacher;
+        StudentClass studentClass;
+        Predmet predmet;
+        Homework homework;
+        if (!lesson.getTeacher().getName().equals(lessonForUpdate.getTeacher().getName())) {
+            teacher = userRepository.findUserByName(lesson.getTeacher().getName()).orElseThrow(
+                    () -> new NotFoundException(
+                            "Пользователь с именем " + lesson.getTeacher().getName() + " не найден"));
+        } else {
+            teacher = lessonForUpdate.getTeacher();
+        }
+        if (!lesson.getStudentClass().getTitle().equals(lessonForUpdate.getStudentClass().getTitle())) {
+            studentClass = studentClassRepository.findByTitle(lesson.getStudentClass().getTitle()).orElseThrow(
+                    () -> new NotFoundException(
+                            "Класс с названием " + lesson.getStudentClass().getTitle() + " не найден"));
+        } else {
+            studentClass = lessonForUpdate.getStudentClass();
+        }
+        if (!lesson.getPredmet().getTitle().equals(lessonForUpdate.getPredmet().getTitle())) {
+            predmet = predmetRepository.findByTitle(lesson.getPredmet().getTitle()).orElseThrow(
+                    () -> new NotFoundException(
+                            "Предмет с названием " + lesson.getStudentClass().getTitle() + " не найден"));
+        } else {
+            predmet = lessonForUpdate.getPredmet();
+        }
+        if (!lesson.getHomework().getDescription().equals(lessonForUpdate.getHomework().getDescription())) {
+            homework = homeworkRepository.findByDescription(lesson.getHomework().getDescription())
+                    .orElse(homeworkRepository.save(lesson.getHomework()));
+        } else {
+            homework = lessonForUpdate.getHomework();
+        }
+
+        lessonForUpdate.setLessonTime(lesson.getLessonTime());
+        lessonForUpdate.setTeacher(teacher);
+        lessonForUpdate.setStudentClass(studentClass);
+        lessonForUpdate.setPredmet(predmet);
+        lessonForUpdate.setHomework(homework);
+        lessonRepository.save(lessonForUpdate);
     }
 }

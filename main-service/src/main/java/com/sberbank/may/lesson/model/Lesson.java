@@ -21,12 +21,13 @@ public class Lesson {
     private LocalDateTime lessonTime;
 
     @JoinColumn(name = "user_id")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private User teacher;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private StudentClass studentClass;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private Predmet predmet;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "homework_id")
     private Homework homework;
 }

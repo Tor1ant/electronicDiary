@@ -61,5 +61,17 @@ public class LessonController {
         return "redirect:/lesson/searchLessonForm";
     }
 
+    //продолжить разбираться с редактированием
+    @PostMapping("/edit")
+    public String showUpdateForm(@RequestParam("id") long id, Model model) {
+        Lesson lesson = lessonService.findLessonById(id);
+        model.addAttribute("lesson", lesson);
+        return "lesson_pages/update_lesson";
+    }
 
+    @PostMapping("/update")
+    public String updateLesson(@ModelAttribute("lesson") Lesson lesson) {
+        lessonService.updateLesson(lesson);
+        return "redirect:/lesson/searchLessonForm";
+    }
 }
