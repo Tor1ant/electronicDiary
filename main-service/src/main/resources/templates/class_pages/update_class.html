@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Изменение класса</title>
+</head>
+<body>
+<h1>Введите новое значение</h1>
+<form th:object="${studentClass}" method="post" action="/class/editClass">
+  <label for="title">Класс:</label>
+  <input type="hidden" id="id" name="id" th:value="${studentClass.id}"/>
+  <input type="text" id="title" name="title" required th:value="${studentClass.title}"/>
+  <br> <br>
+  <button type="submit">Изменить</button>
+</form>
+<br>
+<a href="/user/admin">На главную страницу</a>
+</body>
+</html>

@@ -30,7 +30,7 @@ public class LessonController {
         lesson.setTeacher(new User());
         lesson.setStudentClass(new StudentClass());
         lesson.setPredmet(new Predmet());
-        return "lesson/create_lesson";
+        return "lesson_pages/create_lesson";
     }
 
     @PostMapping("/saveLesson")
@@ -41,7 +41,7 @@ public class LessonController {
 
     @GetMapping("/searchLessonForm")
     public String showSearchUserForm(@ModelAttribute("user") UserDto userDto) {
-        return "lesson/lesson_search";
+        return "lesson_pages/lesson_search";
     }
 
     @GetMapping("/search")
@@ -52,7 +52,7 @@ public class LessonController {
             Model model) {
         List<Lesson> lessons = lessonService.searchLessons(teacherName, className, subjectName, lessonTime);
         model.addAttribute("lessons", lessons);
-        return "lesson/lesson_list";
+        return "lesson_pages/lesson_list";
     }
 
     @PostMapping("/delete")

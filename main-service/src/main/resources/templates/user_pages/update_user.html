@@ -2,32 +2,34 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>update User form</title>
+  <title>Изменение пользователя</title>
 </head>
 <body>
-<h1>update User Form</h1>
-<form th:object="${user}" method="post" action="/user/edit">
-  <label for="name">Name:</label>
+<h1>Введите новое значение</h1>
+<form th:object="${user}" method="post" action="/user/editUser">
+  <label for="name">Имя:</label>
   <input type="hidden" id="id" name="id" th:value="${user.id}"/>
   <input type="text" id="name" name="name" required th:value="${user.name}"/>
   <br> <br>
-  <label for="password">Password:</label>
+  <label for="password">Пароль:</label>
   <input type="password" id="password" name="password" required th:value="${user.password}"/>
   <br> <br>
   <label for="email">Email:</label>
   <input type="email" id="email" name="email" required th:value="${user.email}"/>
   <br> <br>
-  <label for="phone">Phone:</label>
+  <label for="phone">Телефон:</label>
   <input type="text" id="phone" name="phone" required th:value="${user.phone}"/>
   <br> <br>
-  <label for="role">Role:</label>
+  <label for="role">Роль:</label>
   <select id="role" name="role" required th:value="${user.role}">
     <option value="ROLE_ADMIN">Admin</option>
     <option value="ROLE_PARENT">Parent</option>
     <option value="ROLE_TEACHER">Teacher</option>
   </select>
   <br> <br>
-  <button type="submit">Save</button>
+  <button type="submit">Изменить</button>
 </form>
+<br>
+<a href="/user/admin">На главную страницу</a>
 </body>
 </html>

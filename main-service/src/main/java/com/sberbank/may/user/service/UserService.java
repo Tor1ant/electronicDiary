@@ -15,7 +15,9 @@ public interface UserService {
 
     User findUserById(long id);
 
-    User patchUser(User user);
-
     User findUserByName(String name);
+
+    void patchUser(User user);
+
+    List<User> searchAllUser();
 }

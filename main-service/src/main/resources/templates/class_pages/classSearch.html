@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск класса</title>
+</head>
+<body>
+<h1>Введите данные для поиска</h1>
+<form th:object="${class}" method="get" action="/class/searchClass">
+    <label for="title">Класс:</label>
+    <input type="text" id="title" name="title" th:value="${class.title}"/>
+    <br> <br>
+    <button type="submit">Найти</button>
+</form>
+<br>
+<a href="/user/admin">На главную страницу</a>
+</body>
+</html>

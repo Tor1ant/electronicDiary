@@ -33,8 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteById(long id) {
-        userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Пользователь с id=" + id + " не найден"));
+        findUserById(id);
         userRepository.deleteById(id);
     }
 
@@ -45,16 +44,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User patchUser(User user) {
-        User userForUpdate = userRepository.findById(user.getId())
-                .orElseThrow(() -> new NotFoundException("Пользователь с id=" + user.getId() + " не найден"));
+    public void patchUser(User user) {
+        User userForUpdate = findUserById(user.getId());
         userForUpdate.setEmail(user.getEmail());
         userForUpdate.setRole(user.getRole());
         userForUpdate.setPhone(user.getPhone());
         userForUpdate.setPassword(user.getPassword());
         userForUpdate.setName(user.getName());
         userRepository.save(userForUpdate);
-        return userRepository.save(userForUpdate);
+    }
+
+    @Override
+    public List<User> searchAllUser() {
+        return userRepository.findAll();
     }
 
     @Override

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание класса</title>
+</head>
+<body>
+<h1>Введите название класса для создания</h1>
+<form th:object="${studentClass}" method="post" action="/class/saveClass">
+    <label for="title">Название:</label>
+    <input type="text" id="title" name="title" required th:value="${studentClass.title}"/>
+    <br> <br>
+    <button type="submit">Создать</button>
+</form>
+<br>
+<a href="/user/admin">На главную страницу</a>
+</body>
+</html>
