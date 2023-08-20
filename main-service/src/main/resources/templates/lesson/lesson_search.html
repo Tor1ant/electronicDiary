@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Lesson</title>
+</head>
+<body>
+<h2>Поиск урока</h2>
+<form method="get" action="/lesson/search">
+
+  <label for="teacherName">ФИО учителя:</label>
+  <input type="text" id="teacherName" name="teacherName" />
+  <br> <br>
+
+  <label for="className">Название класса:</label>
+  <input type="text" id="className" name="className" />
+  <br> <br>
+
+  <label for="subjectName">Название предмета:</label>
+  <input type="text" id="subjectName" name="subjectName" />
+  <br> <br>
+
+  <label for="lessonTime">Дата и время урока в формате dd-mm-yy HH:mm:</label>
+  <input type="text" id="lessonTime" required name="lessonTime" />
+  <br> <br>
+
+  <button type="submit">Поиск</button>
+
+</form>
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.sberbank.may.user.repository;
 
 import com.sberbank.may.user.model.User;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             " and (:email = '' or u.email = :email)" +
             " and (:phone = '' or u.phone = :phone)")
     List<User> searchUser(@Param("name") String name, @Param("email") String email,
-                                     @Param("phone") String phone);
+            @Param("phone") String phone);
+
+    Optional<User> findUserByName(String name);
 }

@@ -7,14 +7,17 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "lessons")
 @Data
 public class Lesson {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime lessonTime;
 
     @JoinColumn(name = "user_id")

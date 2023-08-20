@@ -56,4 +56,10 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userForUpdate);
         return userRepository.save(userForUpdate);
     }
+
+    @Override
+    public User findUserByName(String name) {
+        return userRepository.findUserByName(name)
+                .orElseThrow(() -> new NotFoundException("Пользователь с именем " + name + " не найден"));
+    }
 }

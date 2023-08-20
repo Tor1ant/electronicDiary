@@ -16,4 +16,6 @@ public interface UserService {
     User findUserById(long id);
 
     User patchUser(User user);
+
+    User findUserByName(String name);
 }
