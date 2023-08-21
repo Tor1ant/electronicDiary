@@ -15,4 +15,6 @@ public interface LessonService {
     Lesson findLessonById(long id);
 
     void updateLesson(Lesson lesson);
+
+    List<Lesson> getAllLessons();
 }
