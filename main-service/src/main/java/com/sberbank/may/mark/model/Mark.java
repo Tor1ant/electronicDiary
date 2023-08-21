@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Table(name = "mark_lesson_student")
+@Table(name = "students_lessons")
 @Data
 public class Mark {
     @Id
@@ -16,6 +16,10 @@ public class Mark {
     private Long id;
     private int value;
     @ManyToMany
+    @JoinTable(
+            name = "students_lessons",
+            joinColumns = @JoinColumn(name = "value"),
+            inverseJoinColumns = @JoinColumn (name = "lesson_id"))
     private List<Lesson> lessons;
     @ManyToMany(mappedBy = "marks")
     private List<Student> students;

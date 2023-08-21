@@ -4,7 +4,7 @@ drop table if exists predmets cascade;
 drop table if exists student_classes cascade;
 drop table if exists homeworks cascade;
 drop table if exists lessons cascade;
-drop table if exists mark_lesson_student cascade;
+drop table if exists students_lessons cascade;
 drop table if exists student_user cascade;
 
 create table users
@@ -75,7 +75,7 @@ create table public.lessons
             references public.homeworks
 );
 
-create table mark_lesson_student
+create table students_lessons
 (
     value      integer not null,
     lesson_id  integer not null,
@@ -88,7 +88,7 @@ create table mark_lesson_student
         foreign key (student_id) references students
 );
 
-create table public.student_user
+create table student_user
 (
     user_id    integer not null
         constraint student_user_users__id_fk

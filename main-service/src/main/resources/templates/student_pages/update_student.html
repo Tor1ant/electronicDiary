@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Изменение ученика</title>
+</head>
+<body>
+<h1>Введите новое значение</h1>
+<form th:object="${student}" method="post" action="/student/editStudent">
+  <label for="name">ФИО:</label>
+  <input type="hidden" id="id" name="id" th:value="${student.id}"/>
+  <input type="text" id="name" name="name" required th:value="${student.name}"/>
+  <br> <br>
+  <label for="studentClass">Класс:</label>
+  <select id="studentClass" name="studentClass" required>
+    <option th:each="class : ${studentClasses}" th:value="${class.id}" th:text="${class.title}"
+            th:selected="${student.studentClass.id == class.id}"></option>
+  </select>
+  <br> <br>
+  <label for="user">Родитель 1:</label>
+  <select id="user" name="user" required>
+    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"
+            th:selected="${student.user[0].id == user.id}"></option>
+  </select>
+  <br> <br>
+  <label for="user">Родитель 2:</label>
+  <select id="user1" name="user">
+    <option value="">Не заполнять</option>
+    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"
+            th:if="${student.user.size() > 1}" th:selected="${student.user[1].id == user.id}"
+            ></option>
+    <option th:if="${student.user.size() == 1}" th:each="user : ${users}" th:value="${user.id}" th:text="${user.name}"></option>
+  </select>
+  <br> <br>
+  <button type="submit">Изменить</button>
+</form>
+<br>
+<a href="/user/admin">На главную страницу</a>
+</body>
+</html>

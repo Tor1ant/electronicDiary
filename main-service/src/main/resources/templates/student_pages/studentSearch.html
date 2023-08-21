@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск ученика</title>
+</head>
+<body>
+<h1>Введите данные для поиска</h1>
+<form th:object="${student}" method="get" action="/student/searchStudent">
+    <label for="name">ФИО:</label>
+    <input type="text" id="name" name="name" th:value="${student.name}"/>
+    <br> <br>
+    <label for="studentClass">Класс:</label>
+    <select id="studentClass" name="studentClass" required>
+        <option th:each="class : ${studentClasses}" th:value="${class.id}" th:text="${class.title}"></option>
+    </select>
+    <br> <br>
+    <button type="submit">Найти</button>
+    <br> <br>
+</form>
+<br>
+<a href="/user/admin">На главную страницу</a>
+</body>
+</html>
