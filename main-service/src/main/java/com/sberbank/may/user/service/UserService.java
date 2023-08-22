@@ -4,6 +4,7 @@ import com.sberbank.may.user.dto.UserDto;
 import com.sberbank.may.user.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -20,4 +21,6 @@ public interface UserService {
     void patchUser(User user);
 
     List<User> searchAllUser();
+
+    Set<User> getAllTeachers();
 }

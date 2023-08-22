@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Страница администратора</title>
+  <meta charset="UTF-8">
+  <title>Страница администратора</title>
 </head>
 <body>
 <h1>Выберете действие:</h1>
 
 <form method="get" action="/class/classForm">
-    <br>
-    <button type="submit">Создать класс</button>
+  <br>
+  <button type="submit">Создать класс</button>
 </form>
 <form method="get" action="/class/searchClassForm">
-    <br>
-    <button type="submit">Найти класс</button>
+  <br>
+  <button type="submit">Найти класс</button>
 </form>
 <form method="get" action="/class/allClasses">
-    <br>
-    <button type="submit">Список классов</button>
+  <br>
+  <button type="submit">Список классов</button>
 </form>
 <form method="get" action="/user/userForm">
-    <br>
-    <button type="submit">Создать пользователя</button>
+  <br>
+  <button type="submit">Создать пользователя</button>
 </form>
 <form method="get" action="/user/searchUserForm">
-    <br>
-    <button type="submit">Найти пользователя</button>
+  <br>
+  <button type="submit">Найти пользователя</button>
 </form>
 <form method="get" action="/user/allUsers">
-    <br>
-    <button type="submit">Список пользователей</button>
+  <br>
+  <button type="submit">Список пользователей</button>
+</form>
+<form method="get" action="/lesson/lessonForm">
+  <br>
+  <button type="submit">Создать урок</button>
+</form>
+<form method="get" action="/lesson/searchLessonForm">
+  <br>
+  <button type="submit">Найти урок</button>
+</form>
+<form method="get" action="/lesson/allLessons">
+  <br>
+  <button type="submit">Список уроков</button>
+</form>
+<form method="get" action="/predmet/predmetForm">
+  <br>
+  <button type="submit">Создать предмет</button>
+</form>
+<form method="get" action="/predmet/allPredmets">
+  <br>
+  <button type="submit">Список предметов</button>
 </form>
 <form method="get" action="/student/studentForm">
     <br>

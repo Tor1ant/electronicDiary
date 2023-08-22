@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Edit Lesson</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Изменение урока:</h2>
+
+<form th:object="${lesson}" th:action="@{/lesson/update}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+  <table>
+    <tr>
+      <td>Учитель:</td>
+      <td><label>
+        <input type="text" th:field="*{teacher.name}" />
+      </label></td>
+    </tr>
+    <tr>
+      <td>Класс:</td>
+      <td><label>
+        <input type="text" th:field="*{studentClass.title}" />
+      </label></td>
+    </tr>
+    <tr>
+      <td>Предмет:</td>
+      <td><label>
+        <input type="text" th:field="*{predmet.title}" />
+      </label></td>
+    </tr>
+    <tr>
+      <td>Домашнее задание:</td>
+      <td><label>
+        <input type="text" th:field="*{homework.description}" />
+      </label></td>
+    </tr>
+    <tr>
+      <td>Время урока:</td>
+      <td><label>
+        <input type="datetime-local" th:field="*{lessonTime}" />
+      </label></td>
+    </tr>
+    <tr>
+      <td><button type="submit">Обновить</button></td>
+    </tr>
+  </table>
+</form>
+<br>
+<a href="/user/admin">На главную страницу</a>
+</body>
+</html>

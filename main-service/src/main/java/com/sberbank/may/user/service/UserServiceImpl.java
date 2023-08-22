@@ -2,9 +2,11 @@ package com.sberbank.may.user.service;
 
 import com.sberbank.may.exception.NotFoundException;
 import com.sberbank.may.user.dto.UserDto;
+import com.sberbank.may.user.enums.Role;
 import com.sberbank.may.user.model.User;
 import com.sberbank.may.user.repository.UserRepository;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +59,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> searchAllUser() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Set<User> getAllTeachers() {
+        return userRepository.findUserByRole(Role.ROLE_TEACHER);
     }
 
     @Override
