@@ -11,4 +11,10 @@ public interface LessonService {
     List<Lesson> searchLessons(String teacherName, String className, String subjectName, LocalDateTime lessonTime);
 
     void deleteById(long id);
+
+    Lesson findLessonById(long id);
+
+    void updateLesson(Lesson lesson);
+
+    List<Lesson> getAllLessons();
 }

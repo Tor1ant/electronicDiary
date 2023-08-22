@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Создание нового предмета</title>
+</head>
+<body>
+<h2>Создать новый предмет</h2>
+<form th:object="${predmet}" method="post" action="/predmet/savePredmet">
+  <label for="title">Название предмета:</label>
+  <input type="text" id="title" name="title" required />
+  <br> <br>
+  <button type="submit">Сохранить</button>
+  <br>
+  <a href="/user/admin">На главную страницу</a>
+</form>
+</body>
+</html>

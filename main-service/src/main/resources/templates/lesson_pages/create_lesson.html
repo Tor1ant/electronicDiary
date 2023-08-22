@@ -7,21 +7,29 @@
 <body>
 <h2>Добавить новый урок</h2>
 <form th:object="${lesson}" method="post" action="/lesson/saveLesson">
-  <label for="lessonTime">Дата и время проведения урока в формате dd-mm-yy HH:mm:</label>
-  <input type="text" id="lessonTime" name="lessonTime" required />
+  <label for="lessonTime">Дата и время проведения урока:</label>
+  <input type="datetime-local" id="lessonTime" name="lessonTime" required />
   <br> <br>
-  <label for="teacher">ФИО учителя:</label>
-  <input type="text" id="teacher" name="teacher.name" required />
+  <label for="teacher">Учитель:</label>
+  <select id="teacher" name="teacher.id" th:required="required">
+    <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+  </select>
   <br> <br>
-  <label for="studentClass">Название класса:</label>
-  <input type="text" id="studentClass" name="studentClass.title" required />
+  <label for="studentClass">Класс:</label>
+  <select id="studentClass" name="studentClass.id" th:required="required">
+    <option th:each="studentClass : ${classes}" th:value="${studentClass.id}" th:text="${studentClass.title}"></option>
+  </select>
   <br> <br>
   <label for="predmet">Предмет:</label>
-  <input type="text" id="predmet" name="predmet.title" required />
+  <select id="predmet" name="predmet.id" th:required="required">
+    <option th:each="predmet : ${predmets}" th:value="${predmet.id}" th:text="${predmet.title}"></option>
+  </select>
   <br> <br>
   <input type="hidden" id="homework" name="homework.description" value="" />
+  <br> <br>
+  <button type="submit">Сохранить</button>
   <br>
-  <button type="submit">Добавить</button>
+  <a href="/user/admin">На главную страницу</a>
 </form>
 
 </body>

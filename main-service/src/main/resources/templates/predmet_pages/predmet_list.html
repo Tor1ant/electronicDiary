@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Subject List</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<h2>Список предметов:</h2>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Название</th>
+    <th>Действия</th>
+  </tr>
+  <tr th:each="predmet : ${predmets}">
+    <td th:text="${predmet.id}"></td>
+    <td th:text="${predmet.title}"></td>
+    <td>
+      <form th:object="${predmet}" th:action="@{/predmet/delete(id=${predmet.id})}" method="post">
+        <button type="submit">Удалить</button>
+      </form>
+    </td>
+  </tr>
+</table>
+<br>
+<a href="/user/admin">На главную страницу</a>
+<br>
+<a href="/predmet/predmetForm">Создать предмет</a>
+</body>
+</html>
