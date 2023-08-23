@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Страница учителя</title>
+</head>
+<body>
+<h1>Выберете действие:</h1>
+
+<form method="get" action="/lesson/searchLesson">
+  <br>
+  <button type="submit">Внести или изменить ДЗ</button>
+</form>
+<form method="get" action="/lesson/searchMyLesson">
+  <br>
+  <button type="submit">Показать уроки</button>
+</form>
+</body>
+</html>

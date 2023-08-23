@@ -73,5 +73,10 @@ public class UserController {
     public String showAdminPage() {
         return "home_pages/homepage_admin";
     }
+
+    @GetMapping("/teacher")
+    public String showTeacherPage() {
+        return "home_pages/homepage_teacher";
+    }
 }
 
