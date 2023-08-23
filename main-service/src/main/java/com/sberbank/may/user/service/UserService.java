@@ -22,5 +22,7 @@ public interface UserService {
 
     List<User> searchAllUser();
 
+    Set<User> getAllParents();
+
     Set<User> getAllTeachers();
 }

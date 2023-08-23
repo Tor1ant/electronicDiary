@@ -13,9 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.sberbank.may.user.enums.Role.ROLE_PARENT;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,8 +36,7 @@ public class StudentController {
                                   Model model) {
         List<StudentClass> studentClasses = studentClassService.searchAllClass();
         model.addAttribute("studentClasses", studentClasses);
-        List<User> users = userService.searchAllUser().stream().filter(t -> t.getRole().equals(ROLE_PARENT))
-                .collect(Collectors.toList());
+        Set<User> users = userService.getAllParents();
         model.addAttribute("users", users);
         return "student_pages/create_student";
     }
@@ -68,7 +65,7 @@ public class StudentController {
     @PostMapping("/delete")
     public String deleteStudent(@RequestParam("id") long id) {
         studentService.deleteById(id);
-        return "redirect:/student_pages/allStudents";
+        return "redirect:/student/allStudents";
     }
 
     @PostMapping("/edit")
@@ -77,8 +74,7 @@ public class StudentController {
         model.addAttribute("student", student);
         List<StudentClass> studentClasses = studentClassService.searchAllClass();
         model.addAttribute("studentClasses", studentClasses);
-        List<User> users = userService.searchAllUser().stream().filter(t -> t.getRole().equals(ROLE_PARENT))
-                .collect(Collectors.toList());
+        Set<User> users = userService.getAllParents();
         model.addAttribute("users", users);
         return "student_pages/update_student";
     }
@@ -86,6 +82,6 @@ public class StudentController {
     @PostMapping("/editStudent")
     public String updateStudent(@ModelAttribute("student") Student student) {
         studentService.patchStudent(student);
-        return "redirect:/student_pages/allStudents";
+        return "redirect:/student/allStudents";
     }
 }

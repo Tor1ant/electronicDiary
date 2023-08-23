@@ -21,7 +21,7 @@ public class Lesson {
     private LocalDateTime lessonTime;
 
     @JoinColumn(name = "user_id")
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval=false)
     private User teacher;
     @OneToOne(cascade = CascadeType.MERGE)
     private StudentClass studentClass;

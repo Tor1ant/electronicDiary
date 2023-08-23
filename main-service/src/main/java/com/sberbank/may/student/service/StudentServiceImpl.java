@@ -28,11 +28,13 @@ public class StudentServiceImpl implements StudentService {
                 studentDto.getStudentClass());
     }
 
+    @Transactional
     @Override
     public List<Student> searchAllStudents() {
         return studentRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Student findStudentById(long id) {
         return studentRepository.findById(id)
@@ -42,7 +44,6 @@ public class StudentServiceImpl implements StudentService {
     @Transactional
     @Override
     public void deleteById(long id) {
-        findStudentById(id);
         studentRepository.deleteById(id);
     }
 
