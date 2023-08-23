@@ -56,5 +56,11 @@ public class StudentServiceImpl implements StudentService {
         studentForUpdate.setUser(student.getUser());
         studentRepository.save(studentForUpdate);
     }
+
+    @Override
+    public List<Student> searchAllStudentsOnLesson(long id) {
+        return studentRepository.searchAllStudentsOnLesson(id)
+                .orElseThrow(() -> new NotFoundException("Ученики с id урока = " + id + " не найдены"));
+    }
 }
 
