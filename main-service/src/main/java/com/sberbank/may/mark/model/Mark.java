@@ -5,18 +5,17 @@ import com.sberbank.may.student.model.Student;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Entity
-@Table(name = "mark_lesson_student")
+@Table(name = "student_lesson")
 @Data
 public class Mark {
     @Id
+    @Column(name = "id_mark")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int value;
-    @ManyToMany
-    private List<Lesson> lessons;
-    @ManyToMany(mappedBy = "marks")
-    private List<Student> students;
+    @ManyToOne
+    private Lesson lesson;
+    @ManyToOne
+    private Student student;
 }

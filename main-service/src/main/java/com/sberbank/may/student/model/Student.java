@@ -19,7 +19,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany()
+    @ManyToMany
     @JoinTable(
             name = "student_user",
             joinColumns = {@JoinColumn(name = "student_id")},
@@ -28,15 +28,12 @@ public class Student {
     private Set<User> user;
 
     @ManyToMany
-    private List<Lesson> lessons;
-
-    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "mark_lesson_student",
+            name = "student_lesson",
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "lesson_id")}
     )
-    private List<Mark> marks;
+    private List<Lesson> lessons;
 
     @ManyToOne
     private StudentClass studentClass;

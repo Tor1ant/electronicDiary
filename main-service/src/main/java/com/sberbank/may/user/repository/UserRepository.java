@@ -22,5 +22,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findUserByName(String name);
 
-    Set<User> findUserByRole(Role teacher);
+    Set<User> findUserByRole(Role role);
 }

@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Set<User> getAllParents() {
+        return userRepository.findUserByRole(Role.ROLE_PARENT);
+    }
+
+    @Override
     public Set<User> getAllTeachers() {
         return userRepository.findUserByRole(Role.ROLE_TEACHER);
     }
