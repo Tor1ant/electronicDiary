@@ -4,6 +4,8 @@ import com.sberbank.may.lesson.model.Homework;
 import com.sberbank.may.lesson.model.Lesson;
 import com.sberbank.may.lesson.repository.HomeworkRepository;
 import com.sberbank.may.lesson.repository.LessonRepository;
+import com.sberbank.may.mark.model.Mark;
+import com.sberbank.may.mark.repository.MarkRepository;
 import com.sberbank.may.predmet.model.Predmet;
 import com.sberbank.may.predmet.repository.PredmetRepository;
 import com.sberbank.may.student.model.Student;
@@ -31,6 +33,7 @@ public class DatabaseFiller {
     private final PredmetRepository predmetRepository;
     private final StudentRepository studentRepository;
     private final HomeworkRepository homeworkRepository;
+    private final MarkRepository markRepository;
 
     @PostConstruct
     public void fillDateBase() {
@@ -58,8 +61,13 @@ public class DatabaseFiller {
         lesson.setPredmet(predmet);
         lesson.setTeacher(teacher);
         lesson.setStudentClass(studentClass);
-        lesson.setLessonTime(LocalDateTime.now());
+        lesson.setLessonTime(LocalDateTime.now().plusDays(1));
         lesson.setHomework(homework);
-        lessonRepository.save(lesson);
+        lesson = lessonRepository.save(lesson);
+        Mark mark = new Mark();
+        mark.setLesson(lesson);
+        mark.setStudent(student);
+        mark.setValue(5);
+        markRepository.saveAndFlush(mark);
     }
 }

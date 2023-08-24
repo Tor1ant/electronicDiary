@@ -1,8 +1,10 @@
 package com.sberbank.may.student.service;
 
+import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.student.dto.StudentDto;
 import com.sberbank.may.student.model.Student;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface StudentService {
@@ -17,4 +19,8 @@ public interface StudentService {
     void deleteById(long id);
 
     void patchStudent(Student student);
+
+    List<LessonWithMarkOut> getStudentSchedule(Long studentId, LocalDate date);
+
+    List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId);
 }
