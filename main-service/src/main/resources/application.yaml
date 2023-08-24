@@ -17,6 +17,9 @@ spring:
     username: ${POSTGRES_USER:user}
     password: ${POSTGRES_PASSWORD:pass}
     driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
 logging:
   level:
     org:
@@ -32,4 +35,3 @@ logging:
       orm:
         jpa:
           JpaTransactionManager: DEBUG
-

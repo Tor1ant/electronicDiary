@@ -8,9 +8,14 @@ import com.sberbank.may.studentClass.service.StudentClassService;
 import com.sberbank.may.user.model.User;
 import com.sberbank.may.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
+import java.lang.Long;
 
 import java.util.List;
 import java.util.Set;
@@ -83,5 +88,16 @@ public class StudentController {
     public String updateStudent(@ModelAttribute("student") Student student) {
         studentService.patchStudent(student);
         return "redirect:/student/allStudents";
+    }
+
+
+    @GetMapping("/studentsReport")
+    public Mono<ResponseEntity<byte[]>> generateStudentsReport(@RequestParam("studentId") Long studentId) {
+        Mono<byte[]> reportBytesMono = studentService.getAvgMarkReport(studentId);
+        return reportBytesMono.map(reportBytes -> {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            return ResponseEntity.ok().headers(headers).body(reportBytes);
+        });
     }
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница родителя</title>
+</head>
+<body>
+<h1>Выберете действие:</h1>
+
+<form method="get" action="/schedule">
+    <br>
+    <button type="submit">Получить расписание по дате</button>
+</form>
+<form method="get" action="/studentMarks">
+    <br>
+    <button type="submit">получить оценки по предмету</button>
+</form>
+<form method="get" action="/class/allClasses">
+    <br>
+    <button type="submit">получать уведомления</button>
+</form>
+<form method="get" action="/student/studentsReport">
+    <br>
+    <button type="submit">выгрузка оценок за год в pdf</button>
+</form>
+</body>
+</html>
