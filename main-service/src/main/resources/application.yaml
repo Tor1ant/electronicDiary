@@ -33,3 +33,6 @@ logging:
         jpa:
           JpaTransactionManager: DEBUG
 
+flyway:
+  enabled: true
+  locations: classpath:db/migration
