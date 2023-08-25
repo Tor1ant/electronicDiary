@@ -2,12 +2,16 @@ package com.sberbank.may.lesson.controller;
 
 import com.sberbank.may.lesson.model.Lesson;
 import com.sberbank.may.lesson.service.LessonService;
+import com.sberbank.may.predmet.model.Predmet;
 import com.sberbank.may.predmet.service.PredmetService;
+import com.sberbank.may.studentClass.model.StudentClass;
 import com.sberbank.may.studentClass.service.StudentClassService;
 import com.sberbank.may.user.dto.UserDto;
+import com.sberbank.may.user.model.User;
 import com.sberbank.may.user.service.UserService;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -44,7 +48,11 @@ public class LessonController {
     }
 
     @GetMapping("/searchLessonForm")
-    public String showSearchUserForm(@ModelAttribute("user") UserDto userDto) {
+    public String showSearchUserForm(Model model) {
+        model.addAttribute("user", new UserDto());
+        model.addAttribute("teachers", userService.getAllTeachers());
+        model.addAttribute("classes", studentClassService.searchAllClass());
+        model.addAttribute("predmets", predmetService.getAllPredmets());
         return "lesson_pages/lesson_search";
     }
 
@@ -68,7 +76,13 @@ public class LessonController {
     @PostMapping("/edit")
     public String showUpdateForm(@RequestParam("id") long id, Model model) {
         Lesson lesson = lessonService.findLessonById(id);
+        Set<User> teachers = userService.getAllTeachers();
+        List<Predmet> predmets = predmetService.getAllPredmets();
+        List<StudentClass> studentClasses = studentClassService.searchAllClass();
         model.addAttribute("lesson", lesson);
+        model.addAttribute("teachers", teachers);
+        model.addAttribute("predmets", predmets);
+        model.addAttribute("studentClasses", studentClasses);
         return "lesson_pages/update_lesson";
     }
 
