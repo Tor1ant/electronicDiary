@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск ученика</title>
+</head>
+<body>
+<h1>Выберете ученика</h1>
+<form th:object="${mark}" method="post" action="/mark/saveMark">
+    <input type="hidden" id="lesson" name="lesson" th:value="${lesson.id}" />
+    <label for="student">Ученик:</label>
+    <select id="student" name="student" required>
+        <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+    </select>
+    <br> <br>
+    <label for="value">Оценка:</label>
+    <input type="text" id="value" name="value" required th:value="${mark.value}"/>
+    <br> <br>
+    <button type="submit">Поставить оценку</button>
+    <br> <br>
+</form>
+<br>
+<a href="/user/teacher">На главную страницу</a>
+</body>
+</html>

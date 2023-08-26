@@ -20,6 +20,8 @@ public interface StudentService {
 
     void patchStudent(Student student);
 
+    List<Student> searchAllStudentsOnLesson(long id);
+
     List<LessonWithMarkOut> getStudentSchedule(Long studentId, LocalDate date);
 
     List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId);

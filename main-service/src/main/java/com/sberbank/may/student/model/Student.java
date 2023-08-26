@@ -1,7 +1,6 @@
 package com.sberbank.may.student.model;
 
 import com.sberbank.may.lesson.model.Lesson;
-import com.sberbank.may.mark.model.Mark;
 import com.sberbank.may.studentClass.model.StudentClass;
 import com.sberbank.may.user.model.User;
 import jakarta.persistence.*;
@@ -19,7 +18,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "student_user",
             joinColumns = {@JoinColumn(name = "student_id")},
@@ -27,7 +26,7 @@ public class Student {
     )
     private Set<User> user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "student_lesson",
             joinColumns = {@JoinColumn(name = "student_id")},

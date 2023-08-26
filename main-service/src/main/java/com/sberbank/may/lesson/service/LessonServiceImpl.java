@@ -115,4 +115,17 @@ public class LessonServiceImpl implements LessonService {
     public List<Lesson> getAllLessons() {
         return lessonRepository.findAll();
     }
+
+    @Override
+    public List<Lesson> searchLessonsForTeacher(String teacherName, String className, String subjectName,
+                                                LocalDateTime lessonTimeFrom, LocalDateTime lessonTimeTo) {
+        return lessonRepository.searchLessonsForTeacher(teacherName, className, subjectName, lessonTimeFrom, lessonTimeTo)
+                .orElseThrow(() -> new NotFoundException("По заданным параметрам уроки не найдены"));
+    }
+
+    @Override
+    public List<Lesson> searchLessonsForTeacher(String teacherName, LocalDateTime lessonTimeFrom, LocalDateTime lessonTimeTo) {
+        return lessonRepository.searchAllLessonsForTeacher(teacherName, lessonTimeFrom, lessonTimeTo)
+                .orElseThrow(() -> new NotFoundException("По заданным параметрам уроки не найдены"));
+    }
 }

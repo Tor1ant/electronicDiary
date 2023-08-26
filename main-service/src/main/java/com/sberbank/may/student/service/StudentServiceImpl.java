@@ -66,6 +66,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Student> searchAllStudentsOnLesson(long id) {
+        return studentRepository.searchAllStudentsOnLesson(id)
+                .orElseThrow(() -> new NotFoundException("Ученики с id урока = " + id + " не найдены"));
+    }
+
+    @Override
     public List<LessonWithMarkOut> getStudentSchedule(Long studentId, LocalDate date) {
         Map<Long, LessonWithMarkOut> lessonWithMarkOuts = lessonRepository.getStudentSchedule(studentId, date)
                 .orElseThrow(() -> new NotFoundException("По заданным параметрам расписание не найдено")).stream()
