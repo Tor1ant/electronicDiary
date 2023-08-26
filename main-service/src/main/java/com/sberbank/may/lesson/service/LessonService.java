@@ -17,4 +17,9 @@ public interface LessonService {
     void updateLesson(Lesson lesson);
 
     List<Lesson> getAllLessons();
+
+    List<Lesson> searchLessonsForTeacher(String teacherName, String className, String subjectName,
+                                         LocalDateTime lessonTimeFrom, LocalDateTime lessonTimeTo);
+
+    List<Lesson> searchLessonsForTeacher(String teacherName, LocalDateTime lessonTimeFrom, LocalDateTime lessonTimeTo);
 }
