@@ -41,9 +41,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     Optional<List<Lesson>> searchAllLessonsForTeacher(@Param("teacherName") String teacherName,
                                                 @Param("lessonTimeFrom") LocalDateTime lessonTimeFrom,
                                                 @Param("lessonTimeTo") LocalDateTime lessonTimeTo);
-            @Param("className") String className,
-            @Param("subjectName") String subjectName,
-            @Param("lessonTime") LocalDateTime lessonTime);
 
     @Query("select l from Lesson l join l.studentClass.students s where s.id = :studentId and "
             + " DATE(l.lessonTime) = :lessonDate")
