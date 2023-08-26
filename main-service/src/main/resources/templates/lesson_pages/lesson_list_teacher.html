@@ -35,6 +35,11 @@
         <button type="submit">Поставить оценки</button>
       </form>
     </td>
+    <td>
+      <form th:object="${lesson}" th:action="@{/mark/get(id=${lesson.id})}" method="post">
+        <button type="submit">Посмотреть и отредактировать оценки учеников</button>
+      </form>
+    </td>
   </tr>
 </table>
 <br>

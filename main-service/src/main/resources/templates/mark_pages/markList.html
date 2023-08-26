@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Список учеников</title>
+</head>
+<body>
+<h1>Список учеников с оценками</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ФИО</th>
+    <th>Оценка</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="student : ${students}">
+    <td th:text="${student.name}"></td>
+    <td th:text="${student.mark}"></td>
+    <td>
+      <form th:object="${student}" th:action="@{/mark/edit(id=${student.id})}" method="post">
+        <button type="submit">Редактировать</button>
+      </form>
+    </td>
+    <td>
+      <form th:object="${student}" th:action="@{/mark/delete(id=${student.id})}" method="post">
+        <button type="submit">Удалить</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<br>
+<a href="/user/teacher">На главную страницу</a>
+</body>
+</html>

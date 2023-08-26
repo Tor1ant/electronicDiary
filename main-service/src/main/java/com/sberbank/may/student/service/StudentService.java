@@ -2,6 +2,7 @@ package com.sberbank.may.student.service;
 
 import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.student.dto.StudentDto;
+import com.sberbank.may.student.dto.StudentWithMarkOut;
 import com.sberbank.may.student.model.Student;
 
 import java.time.LocalDate;

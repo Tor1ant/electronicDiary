@@ -7,14 +7,20 @@
 <body>
 <h1>Выберете ученика</h1>
 <form th:object="${mark}" method="post" action="/mark/saveMark">
-    <input type="hidden" id="lesson" name="lesson" th:value="${lesson.id}" />
+    <input type="hidden" id="lesson" name="lesson" th:value="${lesson.id}"/>
     <label for="student">Ученик:</label>
     <select id="student" name="student" required>
         <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
     </select>
     <br> <br>
     <label for="value">Оценка:</label>
-    <input type="text" id="value" name="value" required th:value="${mark.value}"/>
+    <select id="value" name="value" required>
+        <option value="5">5</option>
+        <option value="4">4</option>
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1</option>
+    </select>
     <br> <br>
     <button type="submit">Поставить оценку</button>
     <br> <br>

@@ -31,4 +31,11 @@ public class MarkController {
         return "redirect:/user/teacher";
     }
 
+    @PostMapping("/get")
+    public String showStudentMarks(@RequestParam("id") long id, Model model) {
+        model.addAttribute("students", markService.searchStudentsMarksOnLesson(id));
+        model.addAttribute("lesson", lessonService.findLessonById(id));
+        return "mark_pages/markList";
+    }
+
 }
