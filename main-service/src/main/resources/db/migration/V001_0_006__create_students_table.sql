@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS lessons;
+DROP TABLE IF EXISTS lessons cascade;
 
 
 create table public.lessons

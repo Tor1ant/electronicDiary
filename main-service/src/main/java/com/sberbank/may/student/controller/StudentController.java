@@ -7,7 +7,9 @@ import com.sberbank.may.studentClass.model.StudentClass;
 import com.sberbank.may.studentClass.service.StudentClassService;
 import com.sberbank.may.user.model.User;
 import com.sberbank.may.user.service.UserService;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -91,14 +93,18 @@ public class StudentController {
     }
 
 
-    @GetMapping("/studentsReport")
-    public Mono<ResponseEntity<byte[]>> generateStudentsReport(@RequestParam("studentId") Long studentId) {
-        Mono<byte[]> reportBytesMono = studentService.getAvgMarkReport(studentId);
-
+    @PostMapping("/studentsReport")
+    public Mono<ResponseEntity<byte[]>> generateStudentsReport(@RequestParam("studentId") Long studentId,
+            @RequestParam("predmetId") Long predmetId,
+            @RequestParam("lessonTimeFrom") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+            LocalDateTime lessonTimeFrom,
+            @RequestParam("lessonTimeTo") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+            LocalDateTime lessonTimeTo,
+            Model model) {
+        Mono<byte[]> reportBytesMono = studentService.getAvgMarkReport(studentId,predmetId, lessonTimeFrom, lessonTimeTo);
         return reportBytesMono.map(reportBytes -> {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
-
             return ResponseEntity.ok().headers(headers).body(reportBytes);
         });
     }

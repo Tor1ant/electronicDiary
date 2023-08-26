@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS students cascade;
 
 create table public.students
 (

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS student_user;
+DROP TABLE IF EXISTS student_user cascade;
 
 
 create table public.student_user

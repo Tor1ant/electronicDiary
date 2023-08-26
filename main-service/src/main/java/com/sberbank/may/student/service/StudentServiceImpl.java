@@ -12,9 +12,11 @@ import com.sberbank.may.student.dto.StudentDto;
 import com.sberbank.may.student.model.Student;
 import com.sberbank.may.student.repository.StudentRepository;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import org.springframework.web.reactive.function.client.WebClient;
-
 
 
 @Service
@@ -79,6 +80,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Student> searchAllStudentsOnLesson(long id) {
+        return studentRepository.searchAllStudentsOnLesson(id)
+                .orElseThrow(() -> new NotFoundException("Ученики с id урока = " + id + " не найдены"));
+    }
+
+    @Override
     public List<LessonWithMarkOut> getStudentSchedule(Long studentId, LocalDate date) {
         Map<Long, LessonWithMarkOut> lessonWithMarkOuts = lessonRepository.getStudentSchedule(studentId, date)
                 .orElseThrow(() -> new NotFoundException("По заданным параметрам расписание не найдено")).stream()
@@ -95,16 +102,16 @@ public class StudentServiceImpl implements StudentService {
         markRepository.findStudentMarksForLesson(lessonWithMarkOuts.values().stream()
                         .map(LessonWithMarkOut::getId)
                         .collect(Collectors.toList()), studentId)
-                .stream()
-                .peek(mark -> lessonWithMarkOuts.get(mark.getLesson().getId()).setMark(mark.getValue()))
-                .close();
+                .forEach(mark -> lessonWithMarkOuts.get(mark.getLesson().getId()).setMark(mark.getValue()));
+
         return new ArrayList<>(lessonWithMarkOuts.values());
     }
 
     @Override
-    public List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId) {
+    public List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+            LocalDateTime lessonTimeTo) {
         return markRepository.findStudentMarksForLessonByPredmet(studentId,
-                        predmetId).stream()
+                        predmetId, lessonTimeFrom, lessonTimeTo).stream()
                 .map(mark -> LessonWithMarkOut.builder()
                         .studentClass(mark.getLesson().getStudentClass())
                         .lessonTime(mark.getLesson().getLessonTime())
@@ -118,31 +125,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-    public Mono<byte[]> getAvgMarkReport(Long studentId) {
-        List<Long> lessonIds = lessonRepository.findLessonIdsForYear()
-                .stream()
-                .filter(id -> {
-                    Lesson lesson = lessonRepository.findById(id).orElse(null);
-                    return lesson != null && lesson.getLessonTime().getYear() == LocalDate.now().getYear();
-                })
-                .collect(Collectors.toList());
-        List<Mark> studentMarks = markRepository.findStudentMarksForLesson(lessonIds, studentId);
+    public Mono<byte[]> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+            LocalDateTime lessonTimeTo) {
+        List<Mark> studentMarks = markRepository.findStudentMarkByPredmetAndDates(studentId, lessonTimeFrom,
+                lessonTimeTo, predmetId);
+        OptionalDouble average = studentMarks.stream().mapToInt(Mark::getValue).average();
 
-        double total = 0;
+/*        double total = 0;
         int count = 0;
         for (Mark mark : studentMarks) {
             total += mark.getValue();
             count++;
         }
-
-        double average = total / count;
+        double average = total / count;*/
 
         ReportData reportData = new ReportData();
         reportData.setReportItems(new ArrayList<>());
 
         ReportItem reportItem = new ReportItem();
         reportItem.setFirstName("Фамилия ученика"); // Замените на фактическую фамилию ученика
-        reportItem.setAverageGrade(Double.toString(average));
+        reportItem.setAverageGrade(Double.toString(average.orElse(0.0)));
         reportItem.setPredmet("Название предмета");
 
         reportData.getReportItems().add(reportItem);

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS predmets;
+DROP TABLE IF EXISTS predmets cascade;
 
 
 create table public.predmets

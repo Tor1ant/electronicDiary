@@ -74,6 +74,11 @@ public class UserController {
         return "home_pages/homepage_admin";
     }
 
+    @GetMapping("/teacher")
+    public String showTeacherPage() {
+        return "home_pages/homepage_teacher";
+    }
+
     @GetMapping("/parent")
     public String showParentPage() {
         return "home_pages/homepage_parent";

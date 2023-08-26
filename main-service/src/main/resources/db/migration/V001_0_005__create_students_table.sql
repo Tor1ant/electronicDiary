@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS homeworks;
+DROP TABLE IF EXISTS homeworks cascade;
 
 
 create table public.homeworks

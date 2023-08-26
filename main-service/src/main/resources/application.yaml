@@ -1,5 +1,8 @@
 server:
   port: 8080
+  error:
+      whitelabel:
+        enabled: false
 spring:
   jpa:
     hibernate:
@@ -17,6 +20,9 @@ spring:
     username: ${POSTGRES_USER:user}
     password: ${POSTGRES_PASSWORD:pass}
     driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
 logging:
   level:
     org:
@@ -32,7 +38,3 @@ logging:
       orm:
         jpa:
           JpaTransactionManager: DEBUG
-
-flyway:
-  enabled: true
-  locations: classpath:db/migration
