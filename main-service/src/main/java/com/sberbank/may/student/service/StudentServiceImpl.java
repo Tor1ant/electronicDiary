@@ -88,9 +88,8 @@ public class StudentServiceImpl implements StudentService {
         markRepository.findStudentMarksForLesson(lessonWithMarkOuts.values().stream()
                         .map(LessonWithMarkOut::getId)
                         .collect(Collectors.toList()), studentId)
-                .stream()
-                .peek(mark -> lessonWithMarkOuts.get(mark.getLesson().getId()).setMark(mark.getValue()))
-                .close();
+                .forEach(mark -> lessonWithMarkOuts.get(mark.getLesson().getId()).setMark(mark.getValue()));
+
         return new ArrayList<>(lessonWithMarkOuts.values());
     }
 
