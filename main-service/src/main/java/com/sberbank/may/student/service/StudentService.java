@@ -3,7 +3,7 @@ package com.sberbank.may.student.service;
 import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.student.dto.StudentDto;
 import com.sberbank.may.student.model.Student;
-import org.springframework.http.ResponseEntity;
+import java.time.LocalDateTime;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -26,7 +26,8 @@ public interface StudentService {
 
     List<LessonWithMarkOut> getStudentSchedule(Long studentId, LocalDate date);
 
-    List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId);
+    List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+            LocalDateTime lessonTimeTo);
 
-    Mono<byte[]> getAvgMarkReport(Long studentId);
+    Mono<byte[]> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom, LocalDateTime lessonTimeTo);
 }

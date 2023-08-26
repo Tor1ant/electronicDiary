@@ -3,11 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>Расписание</title>
+  <script>
+    function submitForm(action) {
+      document.getElementById('marks_form').action = action;
+      document.getElementById('marks_form').submit();
+    }
+  </script>
 </head>
+
 <body>
 <h2>Выберите студента и предмет, чтобы посмотреть оценки</h2>
 
-<form action="#" th:action="@{/viewMarks}" method="post">
+<form id="marks_form" action="#" th:action="@{/viewMarks}" method="post">
+  <!-- Ваши поля формы здесь -->
   <div>
     <label>Выберите ученика:</label>
     <label>
@@ -26,8 +34,19 @@
     </label>
   </div>
 
-  <button type="submit">Найти оценки</button>
-
+  <h3>Введите дату и время для поиска</h3>
+  <label for="lessonTimeFrom">От:</label>
+  <input type="datetime-local" id="lessonTimeFrom" required name="lessonTimeFrom" />
+  <br> <br>
+  <label for="lessonTimeTo">До:</label>
+  <input type="datetime-local" id="lessonTimeTo" required name="lessonTimeTo" />
+  <br>
+  <br>
+  <button type="button" onclick="submitForm('/viewMarks');">Найти оценки</button>
+  <br>
+  <br>
+  <button type="button" onclick="submitForm('/student/studentsReport');">средний балл за предмет в pdf</button>
 </form>
 </body>
+
 </html>

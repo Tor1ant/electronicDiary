@@ -49,6 +49,4 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     @Query("SELECT l.id FROM Lesson l")
     List<Long> findLessonIdsForYear();
-
-
 }

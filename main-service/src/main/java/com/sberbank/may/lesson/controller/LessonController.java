@@ -136,7 +136,6 @@ public class LessonController {
                                           @RequestParam("lessonTimeTo") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
                                           LocalDateTime lessonTimeTo,
                                           Model model) {
-
         List<Lesson> lessons = lessonService.searchLessonsForTeacher(teacherName, lessonTimeFrom, lessonTimeTo);
         model.addAttribute("lessons", lessons);
         return "lesson_pages/lesson_list_teacher";
