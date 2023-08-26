@@ -1,2 +1,15 @@
 server:
   port: 9090
+
+spring:
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    username: electronicdiary24@gmail.com
+    password: 6zN7mjDJkInSO4UK
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

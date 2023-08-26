@@ -95,7 +95,7 @@ public class DatabaseFiller {
         lesson.setPredmet(predmet);
         lesson.setTeacher(teacher);
         lesson.setStudentClass(studentClass);
-        lesson.setLessonTime(LocalDateTime.now());
+        lesson.setLessonTime(LocalDateTime.now().plusDays(1));
         lesson.setHomework(homework);
         lessonRepository.save(lesson);
         Lesson lesson1 = new Lesson();

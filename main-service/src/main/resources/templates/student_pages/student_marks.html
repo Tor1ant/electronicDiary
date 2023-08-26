@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Расписание</title>
+</head>
+<body>
+<h2>Выберите студента и предмет, чтобы посмотреть оценки</h2>
+
+<form action="#" th:action="@{/viewMarks}" method="post">
+  <div>
+    <label>Выберите ученика:</label>
+    <label>
+      <select name="studentId">
+        <option th:each="student : ${students}" th:text="${student.name}" th:value="${student.id}"></option>
+      </select>
+    </label>
+  </div>
+
+  <div>
+    <label>Выберите предмет:</label>
+    <label>
+      <select name="predmetId">
+        <option th:each="predmet : ${predmets}" th:text="${predmet.title}" th:value="${predmet.id}"></option>
+      </select>
+    </label>
+  </div>
+
+  <button type="submit">Найти оценки</button>
+
+</form>
+</body>
+</html>

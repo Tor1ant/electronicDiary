@@ -13,21 +13,33 @@
   <table>
     <tr>
       <td>Учитель:</td>
-      <td><label>
-        <input type="text" th:field="*{teacher.name}" />
-      </label></td>
+      <td>
+        <label>
+          <select th:field="*{teacher.name}">
+            <option th:each="teacher : ${teachers}" th:value="${teacher.name}" th:text="${teacher.name}"></option>
+          </select>
+        </label>
+      </td>
     </tr>
     <tr>
       <td>Класс:</td>
-      <td><label>
-        <input type="text" th:field="*{studentClass.title}" />
-      </label></td>
+      <td>
+        <label>
+          <select th:field="*{studentClass.title}">
+            <option th:each="class : ${studentClasses}" th:value="${class.title}" th:text="${class.title}"></option>
+          </select>
+        </label>
+      </td>
     </tr>
     <tr>
       <td>Предмет:</td>
-      <td><label>
-        <input type="text" th:field="*{predmet.title}" />
-      </label></td>
+      <td>
+        <label>
+          <select th:field="*{predmet.title}">
+            <option th:each="predmet : ${predmets}" th:value="${predmet.title}" th:text="${predmet.title}"></option>
+          </select>
+        </label>
+      </td>
     </tr>
     <tr>
       <td>Домашнее задание:</td>

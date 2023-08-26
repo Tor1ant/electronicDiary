@@ -1,7 +1,7 @@
 package com.sberbank.may.lesson.repository;
 
 import com.sberbank.may.lesson.model.Lesson;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,4 +41,12 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     Optional<List<Lesson>> searchAllLessonsForTeacher(@Param("teacherName") String teacherName,
                                                 @Param("lessonTimeFrom") LocalDateTime lessonTimeFrom,
                                                 @Param("lessonTimeTo") LocalDateTime lessonTimeTo);
+            @Param("className") String className,
+            @Param("subjectName") String subjectName,
+            @Param("lessonTime") LocalDateTime lessonTime);
+
+    @Query("select l from Lesson l join l.studentClass.students s where s.id = :studentId and "
+            + " DATE(l.lessonTime) = :lessonDate")
+    Optional<List<Lesson>> getStudentSchedule(@Param("studentId") Long studentId,
+            @Param("lessonDate") LocalDate lessonDate);
 }
