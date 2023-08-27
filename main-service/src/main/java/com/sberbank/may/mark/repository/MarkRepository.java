@@ -3,7 +3,6 @@ package com.sberbank.may.mark.repository;
 import com.sberbank.may.mark.model.Mark;
 import java.util.List;
 
-import com.sberbank.may.student.dto.StudentWithMarkOut;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,6 +1,5 @@
 package com.sberbank.may.student.repository;
 
-import com.sberbank.may.student.dto.StudentWithMarkOut;
 import com.sberbank.may.student.model.Student;
 import com.sberbank.may.studentClass.model.StudentClass;
 import org.springframework.data.jpa.repository.JpaRepository;

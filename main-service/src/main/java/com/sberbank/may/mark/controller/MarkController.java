@@ -28,7 +28,7 @@ public class MarkController {
     @PostMapping("/saveMark")
     public String saveStudent(@ModelAttribute("mark") Mark mark) {
         markService.saveMark(mark);
-        return "redirect:/user/teacher";
+        return "redirect:/lesson/searchMyLesson";
     }
 
     @PostMapping("/get")
@@ -38,4 +38,22 @@ public class MarkController {
         return "mark_pages/markList";
     }
 
+    @PostMapping("/delete")
+    public String deleteMark(@RequestParam("id") long id) {
+        markService.deleteById(id);
+        return "redirect:/lesson/searchMyLesson";
+    }
+
+    @PostMapping("/edit")
+    public String showUpdateForm(@RequestParam("id") long id, Model model) {
+        Mark mark = markService.findMarkById(id);
+        model.addAttribute("mark", mark);
+        return "mark_pages/update_mark";
+    }
+
+    @PostMapping("/editMark")
+    public String updateMark(@ModelAttribute("mark") Mark mark) {
+        markService.patchMark(mark);
+        return "redirect:/lesson/searchMyLesson";
+    }
 }

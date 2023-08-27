@@ -5,7 +5,6 @@ import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.lesson.repository.LessonRepository;
 import com.sberbank.may.mark.repository.MarkRepository;
 import com.sberbank.may.student.dto.StudentDto;
-import com.sberbank.may.student.dto.StudentWithMarkOut;
 import com.sberbank.may.student.model.Student;
 import com.sberbank.may.student.repository.StudentRepository;
 import java.time.LocalDate;

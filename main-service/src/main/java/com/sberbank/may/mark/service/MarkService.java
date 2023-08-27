@@ -9,4 +9,10 @@ public interface MarkService {
     void saveMark(Mark mark);
 
     List<StudentWithMarkOut> searchStudentsMarksOnLesson(long id);
+
+    void deleteById(long id);
+
+    Mark findMarkById(long id);
+
+    void patchMark(Mark mark);
 }

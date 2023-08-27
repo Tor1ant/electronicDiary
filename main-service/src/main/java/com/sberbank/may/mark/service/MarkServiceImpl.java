@@ -1,5 +1,6 @@
 package com.sberbank.may.mark.service;
 
+import com.sberbank.may.exception.NotFoundException;
 import com.sberbank.may.mark.model.Mark;
 import com.sberbank.may.mark.repository.MarkRepository;
 import com.sberbank.may.student.dto.StudentWithMarkOut;
@@ -31,5 +32,23 @@ public class MarkServiceImpl implements MarkService {
                         .mark(mark.getValue())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public void deleteById(long id) {
+        markRepository.deleteById(id);
+    }
+
+    @Override
+    public Mark findMarkById(long id) {
+        return markRepository.findById(id).orElseThrow(() -> new NotFoundException("Оценка с id=" + id + " не найдена"));
+    }
+
+    @Override
+    public void patchMark(Mark mark) {
+        Mark markForUpdate = findMarkById(mark.getId());
+        markForUpdate.setValue(mark.getValue());
+        markRepository.save(markForUpdate);
     }
 }
