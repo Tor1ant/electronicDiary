@@ -2,6 +2,7 @@ package com.sberbank.may.mark.repository;
 
 import com.sberbank.may.mark.model.Mark;
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,4 +23,8 @@ public interface MarkRepository extends JpaRepository<Mark, Long> {
             + "where l.predmet.id = :predmetId and s.id = :studentId")
     List<Mark> findStudentMarksForLessonByPredmet(@Param("predmetId") Long predmetId,
             @Param("studentId") Long studentId);
+
+    @Query("Select m from Mark m"
+            + " where m.lesson.id =:lesson_id")
+    List<Mark> searchStudentsMarksOnLesson(@Param("lesson_id") long id);
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Изменить оценку</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Введите новое значение оценки:</h2>
+
+<form th:object="${mark}" th:action="@{/mark/editMark}" method="post">
+  <input type="hidden" th:field="*{id}"/>
+  <label for="value">Оценка:</label>
+  <select id="value" name="value" required>
+    <option value="5" th:selected="${mark.value == 5}">5</option>
+    <option value="4" th:selected="${mark.value == 4}">4</option>
+    <option value="3" th:selected="${mark.value == 3}">3</option>
+    <option value="2" th:selected="${mark.value == 2}">2</option>
+    <option value="1" th:selected="${mark.value == 1}">1</option>
+  </select>
+  <br> <br>
+  <button type="submit">Изменить оценку</button>
+  <br> <br>
+</form>
+<button onclick="goBack()">Вернуться на предыдущий экран</button>
+<br> <br>
+<a href="/user/teacher">На главную страницу</a>
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+</body>
+</html>

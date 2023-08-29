@@ -32,7 +32,7 @@ public class Student {
             joinColumns = {@JoinColumn(name = "student_id")},
             inverseJoinColumns = {@JoinColumn(name = "lesson_id")}
     )
-    private List<Lesson> lessons;
+    private List<Lesson> markLessons;
 
     @ManyToOne
     private StudentClass studentClass;
