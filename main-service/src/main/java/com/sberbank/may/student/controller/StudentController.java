@@ -1,5 +1,6 @@
 package com.sberbank.may.student.controller;
 
+import com.sberbank.may.predmet.service.PredmetService;
 import com.sberbank.may.student.dto.ReportData;
 import com.sberbank.may.student.dto.ReportItem;
 import com.sberbank.may.student.dto.StudentDto;
@@ -35,20 +36,20 @@ public class StudentController {
     private final StudentService studentService;
     private final StudentClassService studentClassService;
     private final UserService userService;
+    private final PredmetService predmetService;
 
     @Autowired
     private WebClient.Builder webClientBuilder;
 
     @PostMapping("/saveStudent")
     public String saveStudent(@ModelAttribute("student") Student student) {
-
         studentService.saveStudent(student);
         return "redirect:/student/studentForm";
     }
 
     @GetMapping("/studentForm")
     public String showStudentForm(@ModelAttribute("student") Student student,
-                                  Model model) {
+            Model model) {
         List<StudentClass> studentClasses = studentClassService.searchAllClass();
         model.addAttribute("studentClasses", studentClasses);
         Set<User> users = userService.getAllParents();
@@ -100,9 +101,15 @@ public class StudentController {
         return "redirect:/student/allStudents";
     }
 
+    @GetMapping("/studentMarks")
+    public String getStudentMarks(Model model) {
+        model.addAttribute("students", studentService.searchAllStudents());
+        model.addAttribute("predmets", predmetService.getAllPredmets());
+        return "student_pages/student_marks";
+    }
 
-    @GetMapping("/studentsReport")
-    public Mono<String> generateStudentsReport(@RequestParam("studentId") Long studentId,
+    @PostMapping("/studentsReport")
+    public Mono<byte[]> generateStudentsReport(@RequestParam("studentId") Long studentId,
             @RequestParam("predmetId") Long predmetId,
             @RequestParam("lessonTimeFrom") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
             LocalDateTime lessonTimeFrom,
@@ -110,6 +117,9 @@ public class StudentController {
             LocalDateTime lessonTimeTo,
             Model model) {
 
+        return studentService.getAvgMarkReport(studentId, predmetId, lessonTimeFrom,
+                lessonTimeTo);
+/*
         return studentService.getAvgMarkReport(studentId, predmetId, lessonTimeFrom, lessonTimeTo)
                 .flatMap(average -> {
                     ReportData reportData = new ReportData();
@@ -142,6 +152,7 @@ public class StudentController {
                                 return "student_pages/student_marks";
                                // return ResponseEntity.ok().headers(responseHeaders).body(responseBody);
                             });
-                });
+                });*/
+
     }
 }

@@ -17,8 +17,4 @@ public class ReportController {
         GenerateAvg generateAvg = new GenerateAvg();
        return generateAvg.generatePdfAvg(reportData);
     }
-
-
-
-
 }

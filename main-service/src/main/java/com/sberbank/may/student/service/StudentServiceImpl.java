@@ -1,8 +1,8 @@
 package com.sberbank.may.student.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sberbank.may.exception.NotFoundException;
 import com.sberbank.may.lesson.dto.LessonWithMarkOut;
-import com.sberbank.may.lesson.model.Lesson;
 import com.sberbank.may.lesson.repository.LessonRepository;
 import com.sberbank.may.mark.model.Mark;
 import com.sberbank.may.mark.repository.MarkRepository;
@@ -11,12 +11,15 @@ import com.sberbank.may.student.dto.ReportItem;
 import com.sberbank.may.student.dto.StudentDto;
 import com.sberbank.may.student.model.Student;
 import com.sberbank.may.student.repository.StudentRepository;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,54 +124,43 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
-
-
-    public Mono<byte[]> getAvgMarkReport1(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+    @SneakyThrows
+    @Override
+    public Mono<byte[]> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
             LocalDateTime lessonTimeTo) {
+
         List<Mark> studentMarks = markRepository.findStudentMarkByPredmetAndDates(studentId, lessonTimeFrom,
                 lessonTimeTo, predmetId);
         OptionalDouble average = studentMarks.stream().mapToInt(Mark::getValue).average();
-
-/*        double total = 0;
-        int count = 0;
-        for (Mark mark : studentMarks) {
-            total += mark.getValue();
-            count++;
-        }
-        double average = total / count;*/
 
         ReportData reportData = new ReportData();
         reportData.setReportItems(new ArrayList<>());
 
         ReportItem reportItem = new ReportItem();
-        reportItem.setFirstName(String.valueOf(studentId));
+      //  reportItem.setFirstName(String.valueOf(studentId));
+       // reportItem.setAverageGrade(Double.toString(average.orElse(0.0)));
+      //  reportItem.setPredmet(String.valueOf(predmetId));
+        reportItem.setFirstName("Имя");
         reportItem.setAverageGrade(Double.toString(average.orElse(0.0)));
-        reportItem.setPredmet(String.valueOf(predmetId));
+        reportItem.setPredmet("Алгебра");
 
         reportData.getReportItems().add(reportItem);
 
-        return webClientBuilder.build()
-                .post()
+/*        webClientBuilder.build()
+                .get()
+                .uri("http://localhost:7070/report-avg")
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(byte[].class);*/
+        WebClient webClient = WebClient.create("http://localhost:7070");
+        return webClient.post()
                 .uri("/report-avg")
+                .header(StandardCharsets.UTF_8.toString())
+                .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(reportData)
-                .accept(MediaType.APPLICATION_PDF)
+                .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
                 .bodyToMono(byte[].class);
     }
-
-    @Override
-    public Mono<Double> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
-                                         LocalDateTime lessonTimeTo) {
-        return webClientBuilder.build()
-                .get()
-                .uri("/mark-avg?studentId={studentId}&predmetId={predmetId}&lessonTimeFrom={lessonTimeFrom}&lessonTimeTo={lessonTimeTo}",
-                        studentId, predmetId, lessonTimeFrom, lessonTimeTo)
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(Double.class)
-                .defaultIfEmpty(0.0);
-    }
-
-
 }
 
