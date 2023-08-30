@@ -1,4 +1,4 @@
-package com.sberbank.may.student.service;
+package com.sberbank.may.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

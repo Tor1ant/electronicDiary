@@ -21,4 +21,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             + "where l.id = :lesson_id)"
     )
     Optional<List<Student>> searchAllStudentsOnLesson(@Param("lesson_id") long id);
+
 }
