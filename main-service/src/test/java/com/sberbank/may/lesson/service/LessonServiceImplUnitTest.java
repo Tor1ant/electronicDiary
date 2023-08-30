@@ -133,7 +133,7 @@ class LessonServiceImplUnitTest {
         when(predmetRepository.findById(anyLong())).thenReturn(Optional.of(subject1));
         when(lessonRepository.save(any(Lesson.class))).thenReturn(lesson1);
         lessonService.createLesson(lesson1);
-        verify(lessonRepository, times(0)).save(any(Lesson.class));
+        verify(lessonRepository, times(1)).save(any(Lesson.class));
     }
 
     @DisplayName("Проверка создания урока с несуществующим пользователем")
