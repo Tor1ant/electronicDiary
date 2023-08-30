@@ -13,10 +13,7 @@ import com.sberbank.may.student.model.Student;
 import com.sberbank.may.student.repository.StudentRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,7 +122,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
-    public Mono<byte[]> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+
+    public Mono<byte[]> getAvgMarkReport1(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
             LocalDateTime lessonTimeTo) {
         List<Mark> studentMarks = markRepository.findStudentMarkByPredmetAndDates(studentId, lessonTimeFrom,
                 lessonTimeTo, predmetId);
@@ -143,9 +141,9 @@ public class StudentServiceImpl implements StudentService {
         reportData.setReportItems(new ArrayList<>());
 
         ReportItem reportItem = new ReportItem();
-        reportItem.setFirstName("Фамилия ученика"); // Замените на фактическую фамилию ученика
+        reportItem.setFirstName(String.valueOf(studentId));
         reportItem.setAverageGrade(Double.toString(average.orElse(0.0)));
-        reportItem.setPredmet("Название предмета");
+        reportItem.setPredmet(String.valueOf(predmetId));
 
         reportData.getReportItems().add(reportItem);
 
@@ -157,5 +155,20 @@ public class StudentServiceImpl implements StudentService {
                 .retrieve()
                 .bodyToMono(byte[].class);
     }
+
+    @Override
+    public Mono<Double> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+                                         LocalDateTime lessonTimeTo) {
+        return webClientBuilder.build()
+                .get()
+                .uri("/mark-avg?studentId={studentId}&predmetId={predmetId}&lessonTimeFrom={lessonTimeFrom}&lessonTimeTo={lessonTimeTo}",
+                        studentId, predmetId, lessonTimeFrom, lessonTimeTo)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(Double.class)
+                .defaultIfEmpty(0.0);
+    }
+
+
 }
 

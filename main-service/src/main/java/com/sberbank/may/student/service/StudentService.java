@@ -29,5 +29,5 @@ public interface StudentService {
     List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
             LocalDateTime lessonTimeTo);
 
-    Mono<byte[]> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom, LocalDateTime lessonTimeTo);
+    Mono<Double> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom, LocalDateTime lessonTimeTo);
 }
