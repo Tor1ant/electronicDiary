@@ -1,5 +1,6 @@
 package com.sberbank.may.student.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sberbank.may.exception.NotFoundException;
 import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.lesson.repository.LessonRepository;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -142,9 +144,12 @@ public class StudentServiceImpl implements StudentService {
                     .average();
 
             ReportItem reportItem = new ReportItem();
-            reportItem.setFirstName(student.getName());
-            reportItem.setAverageGrade(Double.toString(average.orElse(0.0)));
-            reportItem.setPredmet(String.valueOf(predmetId));
+          //  reportItem.setFirstName(student.getName());
+           // reportItem.setAverageGrade(Double.toString(average.orElse(0.0)));
+          //  reportItem.setPredmet(String.valueOf(predmetId));
+        reportItem.setFirstName("Имя");
+        reportItem.setAverageGrade(Double.toString(average.orElse(0.0)));
+        reportItem.setPredmet("Алгебра");
 
             reportData.getReportItems().add(reportItem);
         }
