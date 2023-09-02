@@ -1,20 +1,30 @@
 package com.sberbank.may.student.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sberbank.may.exception.NotFoundException;
 import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.lesson.repository.LessonRepository;
+import com.sberbank.may.mark.model.Mark;
 import com.sberbank.may.mark.repository.MarkRepository;
+import com.sberbank.may.student.dto.ReportData;
+import com.sberbank.may.student.dto.ReportItem;
 import com.sberbank.may.student.dto.StudentDto;
 import com.sberbank.may.student.model.Student;
 import com.sberbank.may.student.repository.StudentRepository;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +33,9 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final LessonRepository lessonRepository;
     private final MarkRepository markRepository;
+
+    @Autowired
+    private WebClient.Builder webClientBuilder;
 
     @Transactional
     @Override
@@ -94,9 +107,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId) {
+    public List<LessonWithMarkOut> getStudentMarks(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+            LocalDateTime lessonTimeTo) {
         return markRepository.findStudentMarksForLessonByPredmet(studentId,
-                        predmetId).stream()
+                        predmetId, lessonTimeFrom, lessonTimeTo).stream()
                 .map(mark -> LessonWithMarkOut.builder()
                         .studentClass(mark.getLesson().getStudentClass())
                         .lessonTime(mark.getLesson().getLessonTime())
@@ -107,6 +121,51 @@ public class StudentServiceImpl implements StudentService {
                         .mark(mark.getValue())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @SneakyThrows
+    @Override
+    public ResponseEntity<byte[]> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
+                                                   LocalDateTime lessonTimeTo) {
+
+        List<Student> students = studentRepository.searchAllStudentsOnLesson(predmetId)
+                .orElse(Collections.emptyList());
+
+        ReportData reportData = new ReportData();
+        reportData.setReportItems(new ArrayList<>());
+
+
+        for (Student student : students) {
+            List<Mark> studentMarks = markRepository.findStudentMarkByPredmetAndDates(student.getId(), lessonTimeFrom,
+                    lessonTimeTo, predmetId);
+
+            OptionalDouble average = studentMarks.stream()
+                    .mapToInt(Mark::getValue)
+                    .average();
+
+            ReportItem reportItem = new ReportItem();
+            reportItem.setFirstName(student.getName());
+            reportItem.setAverageGrade(String.format("%.2f", average.orElse(0.0)));
+            reportItem.setPredmet(String.valueOf(predmetId));
+
+            reportData.getReportItems().add(reportItem);
+        }
+        WebClient webClient = WebClient.create("http://localhost:7070");
+        byte[] pdfBytes = webClient.post()
+                .uri("/report-avg")
+                .header(StandardCharsets.UTF_8.toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(reportData)
+                .acceptCharset(StandardCharsets.UTF_8)
+                .retrieve()
+                .bodyToMono(byte[].class)
+                .block();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("attachment", "report.pdf");
+
+        return ResponseEntity.ok().headers(headers).body(pdfBytes);
     }
 }
 

@@ -4,6 +4,7 @@ import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.predmet.repository.PredmetRepository;
 import com.sberbank.may.student.service.StudentService;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,8 +45,12 @@ public class ScheduleController {
 
     @PostMapping("/viewMarks")
     public String viewMarks(@RequestParam("studentId") Long studentId, @RequestParam("predmetId") Long predmetId,
+            @RequestParam("lessonTimeFrom") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+            LocalDateTime lessonTimeFrom,
+            @RequestParam("lessonTimeTo") @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+            LocalDateTime lessonTimeTo,
             Model model) {
-        List<LessonWithMarkOut> lessons = studentService.getStudentMarks(studentId, predmetId);
+        List<LessonWithMarkOut> lessons = studentService.getStudentMarks(studentId, predmetId,lessonTimeFrom,lessonTimeTo);
         model.addAttribute("lessons", lessons);
         return "student_pages/student_marks_list";
     }

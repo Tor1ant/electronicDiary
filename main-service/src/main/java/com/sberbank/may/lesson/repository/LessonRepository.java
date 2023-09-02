@@ -46,4 +46,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
             + " DATE(l.lessonTime) = :lessonDate")
     Optional<List<Lesson>> getStudentSchedule(@Param("studentId") Long studentId,
             @Param("lessonDate") LocalDate lessonDate);
+
+
+
 }

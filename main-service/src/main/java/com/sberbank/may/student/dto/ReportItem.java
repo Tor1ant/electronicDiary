@@ -1,4 +1,4 @@
-package com.sberbank.may.dto;
+package com.sberbank.may.student.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
