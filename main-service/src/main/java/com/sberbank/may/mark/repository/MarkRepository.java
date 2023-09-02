@@ -4,6 +4,7 @@ import com.sberbank.may.mark.model.Mark;
 import com.sberbank.may.predmet.model.Predmet;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,4 +34,8 @@ public interface MarkRepository extends JpaRepository<Mark, Long> {
             + "and l.predmet.id = :predmet")
     List<Mark> findStudentMarkByPredmetAndDates(@Param("studentId") Long studentId, @Param("from") LocalDateTime from,
             @Param("to") LocalDateTime to, @Param("predmet") Long predmet);
+
+    @Query("Select m from Mark m"
+            + " where m.lesson.id =:lesson_id")
+    List<Mark> searchStudentsMarksOnLesson(@Param("lesson_id") long id);
 }

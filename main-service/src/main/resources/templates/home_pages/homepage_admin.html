@@ -3,65 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <title>Страница администратора</title>
+  <style>
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 2fr);
+      gap: 1rem;
+    }
+  </style>
 </head>
 <body>
 <h1>Выберете действие:</h1>
-
-<form method="get" action="/class/classForm">
-  <br>
-  <button type="submit">Создать класс</button>
-</form>
-<form method="get" action="/class/searchClassForm">
-  <br>
-  <button type="submit">Найти класс</button>
-</form>
-<form method="get" action="/class/allClasses">
-  <br>
-  <button type="submit">Список классов</button>
-</form>
-<form method="get" action="/user/userForm">
-  <br>
-  <button type="submit">Создать пользователя</button>
-</form>
-<form method="get" action="/user/searchUserForm">
-  <br>
-  <button type="submit">Найти пользователя</button>
-</form>
-<form method="get" action="/user/allUsers">
-  <br>
-  <button type="submit">Список пользователей</button>
-</form>
-<form method="get" action="/lesson/lessonForm">
-  <br>
-  <button type="submit">Создать урок</button>
-</form>
-<form method="get" action="/lesson/searchLessonForm">
-  <br>
-  <button type="submit">Найти урок</button>
-</form>
-<form method="get" action="/lesson/allLessons">
-  <br>
-  <button type="submit">Список уроков</button>
-</form>
-<form method="get" action="/predmet/predmetForm">
-  <br>
-  <button type="submit">Создать предмет</button>
-</form>
-<form method="get" action="/predmet/allPredmets">
-  <br>
-  <button type="submit">Список предметов</button>
-</form>
-<form method="get" action="/student/studentForm">
-    <br>
+<div class="form-grid">
+  <form method="get" action="/class/classForm">
+    <button type="submit">Создать класс</button>
+  </form>
+  <form method="get" action="/class/searchClassForm">
+    <button type="submit">Найти класс</button>
+  </form>
+  <form method="get" action="/class/allClasses">
+    <button type="submit">Список классов</button>
+  </form>
+  <form method="get" action="/user/userForm">
+    <button type="submit">Создать пользователя</button>
+  </form>
+  <form method="get" action="/user/searchUserForm">
+    <button type="submit">Найти пользователя</button>
+  </form>
+  <form method="get" action="/user/allUsers">
+    <button type="submit">Список пользователей</button>
+  </form>
+  <form method="get" action="/lesson/lessonForm">
+    <button type="submit">Создать урок</button>
+  </form>
+  <form method="get" action="/lesson/searchLessonForm">
+    <button type="submit">Найти урок</button>
+  </form>
+  <form method="get" action="/lesson/allLessons">
+    <button type="submit">Список уроков</button>
+  </form>
+  <form method="get" action="/predmet/predmetForm">
+    <button type="submit">Создать предмет</button>
+  </form>
+  <form method="get" action="/predmet/allPredmets">
+    <button type="submit">Список предметов</button>
+  </form>
+  <form method="get" action="/student/studentForm">
     <button type="submit">Создать ученика</button>
-</form>
-<form method="get" action="/student/searchStudentForm">
-    <br>
+  </form>
+  <form method="get" action="/student/searchStudentForm">
     <button type="submit">Найти ученика</button>
-</form>
-<form method="get" action="/student/allStudents">
-    <br>
+  </form>
+  <form method="get" action="/student/allStudents">
     <button type="submit">Список учеников</button>
-</form>
+  </form>
+</div>
 </body>
 </html>
