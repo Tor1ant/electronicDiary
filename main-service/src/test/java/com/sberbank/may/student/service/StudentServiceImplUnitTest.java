@@ -1,5 +1,18 @@
 package com.sberbank.may.student.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.sberbank.may.exception.NotFoundException;
 import com.sberbank.may.lesson.dto.LessonWithMarkOut;
 import com.sberbank.may.lesson.model.Homework;
@@ -14,6 +27,11 @@ import com.sberbank.may.student.repository.StudentRepository;
 import com.sberbank.may.studentClass.model.StudentClass;
 import com.sberbank.may.user.enums.Role;
 import com.sberbank.may.user.model.User;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,19 +39,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplUnitTest {
@@ -192,8 +197,8 @@ class StudentServiceImplUnitTest {
     @DisplayName("Проверка получения расписания ученика")
     @Test
     void testGetStudentSchedule() {
-        when(lessonRepository.getStudentSchedule(anyLong(),any())).thenReturn(Optional.of(List.of(lesson1)));
-        when(markRepository.findStudentMarksForLesson(List.of(anyLong()), anyLong())).thenReturn(List.of(mark1));
+        when(lessonRepository.getStudentSchedule(anyLong(), any())).thenReturn(Optional.of(List.of(lesson1)));
+        when(markRepository.findStudentMarksForLesson(anyList(), anyLong())).thenReturn(List.of(mark1));
         List<LessonWithMarkOut> lessonWithMarkOuts = studentService.getStudentSchedule(1L, LocalDate.now());
         LessonWithMarkOut lessonWithMarkOut = LessonWithMarkOut.builder()
                 .studentClass(studentClass1)
@@ -206,15 +211,17 @@ class StudentServiceImplUnitTest {
                 .build();
         List<LessonWithMarkOut> expectedLessonWithMarkOuts = List.of(lessonWithMarkOut);
         assertThat(lessonWithMarkOuts, is(expectedLessonWithMarkOuts));
-        verify(lessonRepository).getStudentSchedule(anyLong(),any());
-        verify(markRepository).findStudentMarksForLesson(List.of(anyLong()), anyLong());
+        verify(lessonRepository).getStudentSchedule(anyLong(), any());
+        verify(markRepository).findStudentMarksForLesson(anyList(), anyLong());
     }
 
     @DisplayName("Проверка получения оценок ученика по предмету")
     @Test
     void testGetStudentMarks() {
-        when(markRepository.findStudentMarksForLessonByPredmet(anyLong(), anyLong())).thenReturn(List.of(mark1));
-        List<LessonWithMarkOut> lessonWithMarkOuts = studentService.getStudentMarks(1L, 1L);
+        when(markRepository.findStudentMarksForLessonByPredmet(anyLong(), anyLong(), any(), any())).thenReturn(
+                List.of(mark1));
+        List<LessonWithMarkOut> lessonWithMarkOuts = studentService.getStudentMarks(1L, 1L,
+                LocalDateTime.now(), LocalDateTime.now());
         LessonWithMarkOut lessonWithMarkOut = LessonWithMarkOut.builder()
                 .studentClass(studentClass1)
                 .lessonTime(lesson1.getLessonTime())
@@ -226,6 +233,6 @@ class StudentServiceImplUnitTest {
                 .build();
         List<LessonWithMarkOut> expectedLessonWithMarkOuts = List.of(lessonWithMarkOut);
         assertThat(lessonWithMarkOuts, is(expectedLessonWithMarkOuts));
-        verify(markRepository).findStudentMarksForLessonByPredmet(anyLong(), anyLong());
+        verify(markRepository).findStudentMarksForLessonByPredmet(anyLong(), anyLong(), any(), any());
     }
 }
