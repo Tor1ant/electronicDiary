@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.thymeleaf.context.Context;
 
+/**
+ * Класс представляет собой модель данных для отправки электронной почты.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

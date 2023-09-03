@@ -5,6 +5,12 @@ import jakarta.persistence.*;
 import java.util.Set;
 import lombok.Data;
 
+/**
+ * Класс представляет объектное представление студентского класса в базе данных.
+ * Аннотация @Entity используется для указания того, что данный класс является сущностью.
+ * Аннотация @Table(name = "student_classes") указывает на имя таблицы в базе данных, которую представляет этот класс.
+ * Аннотация @Data от Lombok генерирует базовые функции, такие как getters, setters и toString, автоматически.
+ */
 @Entity
 @Table(name = "student_classes")
 @Data

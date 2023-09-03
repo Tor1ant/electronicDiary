@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * Класс, представляющий урок со связанными данными об оценках.
+ */
 @Data
 @Builder
 public class LessonWithMarkOut {

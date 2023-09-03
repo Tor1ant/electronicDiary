@@ -7,6 +7,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Класс User представляет собой модель пользователя в базе данных.
+ * Описывает сущность "Пользователь" и ее свойства.
+ * Аннотирован для использования с JPA и Lombok.
+ */
 @Entity
 @Table(name = "users")
 @Data

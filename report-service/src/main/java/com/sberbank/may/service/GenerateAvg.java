@@ -11,25 +11,31 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.InputStream;
 
+/**
+ * Класс отчетов GenerateAvg.
+ * <p>
+ * Класс предназначен для генерации отчетов в формате PDF на основе данных ReportData.
+ */
 public class GenerateAvg {
 
+    /**
+     * Создает PDF отчет на основе данных ReportData.
+     *
+     * @param reportData Данные для создания отчета.
+     * @return ResponseEntity с готовым PDF отчетом или кодом ошибки, если возникла ошибка в процессе создания отчета.
+     */
     public ResponseEntity<byte[]> generatePdfAvg(ReportData reportData){
         try {
-            // Загрузка шаблона отчета
             ClassPathResource resource = new ClassPathResource("reportAvg.jrxml");
             InputStream inputStream = resource.getInputStream();
             JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
 
-            // Создание источника данных для отчета
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reportData.getReportItems());
 
-            // Заполнение шаблона данными и создание объекта JasperPrint
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
 
-            // Экспортирование отчета в формат PDF
             byte[] pdfBytes = JasperExportManager.exportReportToPdf(jasperPrint);
 
-            // Установка заголовков ответа
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("attachment", "report.pdf");
