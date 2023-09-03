@@ -1,10 +1,11 @@
 package com.sberbank.may.dto;
 
-import com.sberbank.may.dto.ReportItem;
+import java.util.List;
 import lombok.Data;
 
-import java.util.List;
-
+/**
+ * Класс ReportData используется для хранения списка элементов отчета.
+ */
 @Data
 public class ReportData {
     private List<ReportItem> reportItems;
