@@ -1,40 +1,58 @@
 package com.sberbank.may.security.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sberbank.may.userDetailsService.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
-public class SecurityConfig {
+@EnableWebSecurity
+public class SecurityConfig  {
+
+    private final UserDetailsServiceImpl userDetailsService;
+
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorize -> authorize
+                        .requestMatchers("/login").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/teacher").hasRole("TEACHER")
                         .requestMatchers("/parent").hasRole("PARENT")
-                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 )
-                .httpBasic();
+                .formLogin(form -> form
+                .loginPage("/login")
+                        .loginProcessingUrl("/process_login")
+                        .defaultSuccessUrl("/login/success", true)
+                        .failureUrl("/login?error"))
+                .httpBasic(withDefaults());
 
         return http.build();
     }
 
-    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}admin").roles("ADMIN")
-                .and()
-                .withUser("teacher").password("{noop}teacher").roles("TEACHER")
-                .and()
-                .withUser("parent").password("{noop}parent").roles("PARENT");
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
+
 
 
 

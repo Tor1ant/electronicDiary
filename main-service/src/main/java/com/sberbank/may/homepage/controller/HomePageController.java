@@ -3,17 +3,10 @@ package com.sberbank.may.homepage.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
 public class HomePageController {
-
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "login";
-    }
 
     @GetMapping("/admin")
     public String showAdminPage() {
