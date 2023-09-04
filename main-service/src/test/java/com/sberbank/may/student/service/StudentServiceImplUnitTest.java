@@ -3,7 +3,7 @@ package com.sberbank.may.student.service;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.anyLong;
@@ -21,6 +21,7 @@ import com.sberbank.may.lesson.repository.LessonRepository;
 import com.sberbank.may.mark.model.Mark;
 import com.sberbank.may.mark.repository.MarkRepository;
 import com.sberbank.may.predmet.model.Predmet;
+import com.sberbank.may.student.controller.StudentController;
 import com.sberbank.may.student.dto.StudentDto;
 import com.sberbank.may.student.model.Student;
 import com.sberbank.may.student.repository.StudentRepository;
@@ -29,9 +30,8 @@ import com.sberbank.may.user.enums.Role;
 import com.sberbank.may.user.model.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +39,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceImplUnitTest {
@@ -52,6 +53,7 @@ class StudentServiceImplUnitTest {
     private StudentRepository studentRepository;
     @Mock
     private MarkRepository markRepository;
+
 
     private Student student1;
     private Student student2;
@@ -235,4 +237,40 @@ class StudentServiceImplUnitTest {
         assertThat(lessonWithMarkOuts, is(expectedLessonWithMarkOuts));
         verify(markRepository).findStudentMarksForLessonByPredmet(anyLong(), anyLong(), any(), any());
     }
+
+    @Test
+    void testGetAvgMarkReport() {
+        Long studentId = 1L;
+        Long predmetId = 1L;
+        LocalDateTime lessonTimeFrom = LocalDateTime.now().minusDays(7);
+        LocalDateTime lessonTimeTo = LocalDateTime.now();
+
+        List<Student> students = new ArrayList<>();
+        Student student = new Student();
+        student.setId(studentId);
+        student.setName("John");
+        students.add(student);
+        when(studentRepository.searchAllStudentsOnLesson(predmetId)).thenReturn(Optional.of(students));
+
+        List<Mark> studentMarks = new ArrayList<>();
+        Mark mark = new Mark();
+        mark.setStudent(student);
+        mark.setValue(85);
+        studentMarks.add(mark);
+        when(markRepository.findStudentMarkByPredmetAndDates(studentId, lessonTimeFrom, lessonTimeTo, predmetId))
+                .thenReturn(studentMarks);
+
+        StudentServiceImpl service = new StudentServiceImpl(studentRepository, lessonRepository, markRepository);
+        ResponseEntity<byte[]> response = service.getAvgMarkReport(studentId, predmetId, lessonTimeFrom, lessonTimeTo);
+
+        assertNotNull(response);
+        assertEquals(200, response.getStatusCodeValue());
+
+
+        verify(studentRepository, times(1)).searchAllStudentsOnLesson(predmetId);
+        verify(markRepository, times(1)).findStudentMarkByPredmetAndDates(studentId, lessonTimeFrom, lessonTimeTo, predmetId);
+    }
+
+
+
 }
