@@ -15,6 +15,7 @@ import com.sberbank.may.studentClass.repository.StudentClassRepository;
 import com.sberbank.may.user.enums.Role;
 import com.sberbank.may.user.model.User;
 import com.sberbank.may.user.repository.UserRepository;
+import com.sberbank.may.user.service.UserServiceImpl;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -37,6 +38,8 @@ public class DatabaseFiller {
 
     @PostConstruct
     public void fillDateBase() {
+        User admin = new User(null, "admin", "admin", "admintest@mail.ru", "+79119756817",
+                Role.ROLE_ADMIN);
         User teacher = new User(null, "Учитель", "Пароль", "test@mail.ru", "+79995363450",
                 Role.ROLE_TEACHER);
         User teacher1 = new User(null, "Учитель1", "Пароль", "test1@mail.ru", "+79995363451",
@@ -49,6 +52,7 @@ public class DatabaseFiller {
                 Role.ROLE_PARENT);
         User parent2 = new User(null, "Родитель2", "Пароль", "testParent2@mail.ru", "+79992453582",
                 Role.ROLE_PARENT);
+        admin = userRepository.saveAndFlush(admin);
         teacher = userRepository.saveAndFlush(teacher);
         teacher1 = userRepository.saveAndFlush(teacher1);
         teacher2 = userRepository.saveAndFlush(teacher2);
