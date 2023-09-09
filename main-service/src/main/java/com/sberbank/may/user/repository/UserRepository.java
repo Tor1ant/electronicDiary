@@ -43,10 +43,26 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserByName(String name);
 
     /**
+     * Метод для поиска пользователя по email.
+     *
+     * @param email строка, содержащая email пользователя
+     * @returns опциональный объект пользователя, если такой пользователь найден
+     */
+    Optional<User> findUserByEmail(String email);
+
+    /**
      * Метод для поиска пользователей по роли.
      *
      * @param role объект типа Role, представляющий роль пользователя
      * @returns набор пользователей с заданной ролью
      */
     Set<User> findUserByRole(Role role);
+
+    /**
+     * Метод для поиска пользователей по телефону.
+     *
+     * @param phone
+     * @returns набор пользователей с заданным телефоном
+     */
+    Optional<User> findUserByPhone(String phone);
 }

@@ -3,10 +3,10 @@ DROP TABLE IF EXISTS student_user cascade;
 
 create table public.student_user
 (
-    user_id    integer not null
+    user_id    bigint not null
         constraint student_user_users__id_fk
             references public.users,
-    student_id integer not null
+    student_id bigint not null
         constraint student_user_students_id_fk
             references public.students,
     constraint student_user_pk

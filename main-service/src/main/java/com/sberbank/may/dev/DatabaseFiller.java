@@ -15,7 +15,6 @@ import com.sberbank.may.studentClass.repository.StudentClassRepository;
 import com.sberbank.may.user.enums.Role;
 import com.sberbank.may.user.model.User;
 import com.sberbank.may.user.repository.UserRepository;
-import com.sberbank.may.user.service.UserServiceImpl;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -38,6 +37,9 @@ public class DatabaseFiller {
 
     @PostConstruct
     public void fillDateBase() {
+        if (userRepository.count() > 0) {
+            return;
+        }
         User admin = new User(null, "admin", "admin", "admintest@mail.ru", "+79119756817",
                 Role.ROLE_ADMIN);
         User teacher = new User(null, "Учитель", "Пароль", "test@mail.ru", "+79995363450",

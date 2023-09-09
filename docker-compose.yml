@@ -15,6 +15,7 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
       - STATS_SERVER_URL=http://stats-server:8080
+      - URL_REPORT
   main-db:
     image: postgres:14-alpine
     container_name: Main_Service_Db

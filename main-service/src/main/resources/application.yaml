@@ -6,7 +6,7 @@ server:
 spring:
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL10Dialect
@@ -38,3 +38,5 @@ logging:
       orm:
         jpa:
           JpaTransactionManager: DEBUG
+url:
+  report: "http://localhost:7070"

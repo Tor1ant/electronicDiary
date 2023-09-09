@@ -33,6 +33,8 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final LessonRepository lessonRepository;
     private final MarkRepository markRepository;
+    @Value("url.report")
+    private final String url;
 
     @Autowired
     private WebClient.Builder webClientBuilder;
@@ -150,7 +152,7 @@ public class StudentServiceImpl implements StudentService {
 
             reportData.getReportItems().add(reportItem);
         }
-        WebClient webClient = WebClient.create("http://localhost:7070");
+        WebClient webClient = WebClient.create(url);
         byte[] pdfBytes = webClient.post()
                 .uri("/report-avg")
                 .header(StandardCharsets.UTF_8.toString())
