@@ -3,7 +3,6 @@ package com.sberbank.may.homepage.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Контроллер для отображения различных домашних страниц.
@@ -11,21 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
 public class HomePageController {
-
-    /**
-     * Отображает страницу входа в систему
-     *
-     * @return путь к странице входа
-     */
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "login";
-    }
-
-    /**
-     * Отображает домашнюю страницу для администратора системы
+  
+   /**
+     * Отображает домашнюю страницу для администратора
      *
      * @return путь к домашней странице администратора
      */
