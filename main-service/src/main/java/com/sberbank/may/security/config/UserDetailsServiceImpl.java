@@ -21,9 +21,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userRepository.findUserByName(name).orElseThrow(
-                    () -> new NotFoundException(
-                            "Пользователь с именем " + name + " не найден"));
+//        User user = userRepository.findUserByName(name).orElseThrow(
+//                    () -> new NotFoundException(
+//                            "Пользователь с именем " + name + " не найден"));
 
 //                User user = new User(null, "admin", "admin", "admintest@mail.ru", "+79119756817",
 //                        Role.ROLE_ADMIN);
@@ -31,13 +31,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //            User user = new User(null, "Учитель", "Пароль", "test@mail.ru", "+79995363450",
 //                    Role.ROLE_TEACHER);
 
-        String login = user.getName();
-        String password = user.getPassword();
+//        String login = user.getName();
+//        String password = user.getPassword();
 
         return org.springframework.security.core.userdetails.User
-                .withUsername(login)
-                .password(password)
-                .authorities(user.getRole().getAuthority())
+                .withUsername("admin")
+                .password("admin")
+                .authorities("ROLE_ADMIN")
+                //.authorities(user.getRole().getAuthority())
                 .build();
     }
 }

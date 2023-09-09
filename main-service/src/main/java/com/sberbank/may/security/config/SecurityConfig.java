@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -28,9 +29,14 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsServiceImpl;
 
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean
@@ -53,8 +59,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.disable())
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-                                .requestMatchers(HttpMethod.GET,"/login").permitAll()
-                                .requestMatchers(HttpMethod.POST,"/login").permitAll()
+                                .requestMatchers("/login").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/teacher/**").hasAnyRole("TEACHER", "ADMIN")
                                 .requestMatchers("/parent/**").hasAnyRole("PARENT", "ADMIN")
@@ -62,7 +67,7 @@ public class SecurityConfig {
                 )
 
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        //.loginPage("/login")
                         .defaultSuccessUrl("/login/success")
                         .failureUrl("/login?error"))
                 .rememberMe(withDefaults())
