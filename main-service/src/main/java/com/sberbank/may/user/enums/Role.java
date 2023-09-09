@@ -2,8 +2,6 @@ package com.sberbank.may.user.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
-
 /**
  * Перечисление {@code Role} представляет собой набор ролей, которые могут быть назначены пользователям.
  * Роли определяют уровень доступа пользователя к различным частям системы.
@@ -17,7 +15,8 @@ public enum Role implements GrantedAuthority {
  *   <li> {@code ROLE_TEACHER} - Роль учителя. У пользователей с этой ролью есть доступ к образовательным ресурсам системы.
  * </ul>
  */
-public enum Role {
+public enum Role implements GrantedAuthority {
+
     ROLE_ADMIN,
     ROLE_PARENT,
     ROLE_TEACHER;
