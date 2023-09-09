@@ -9,6 +9,10 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * Класс сущности, представляющий урок в учебной системе.
+ * Представляет собой таблицу "lessons" в базе данных.
+ */
 @Entity
 @Table(name = "lessons")
 @Data
@@ -21,7 +25,7 @@ public class Lesson {
     private LocalDateTime lessonTime;
 
     @JoinColumn(name = "user_id")
-    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval=false)
+    @OneToOne(cascade = CascadeType.MERGE)
     private User teacher;
     @OneToOne(cascade = CascadeType.MERGE)
     private StudentClass studentClass;
