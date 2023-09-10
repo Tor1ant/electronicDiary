@@ -12,19 +12,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
- * Репозиторий для работы с сущностью Урок (Lesson)
+ * Р РµРїРѕР·РёС‚РѕСЂРёР№ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ СЃСѓС‰РЅРѕСЃС‚СЊСЋ РЈСЂРѕРє (Lesson)
  */
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
 
     /**
-     * Метод для поиска уроков по заданным параметрам.
+     * РњРµС‚РѕРґ РґР»СЏ РїРѕРёСЃРєР° СѓСЂРѕРєРѕРІ РїРѕ Р·Р°РґР°РЅРЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј.
      *
-     * @param teacherName имя преподавателя
-     * @param className имя класса
-     * @param subjectName название предмета
-     * @param lessonTime время урока
-     * @return список уроков, соответствующих заданным параметрам
+     * @param teacherName РёРјСЏ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЏ
+     * @param className РёРјСЏ РєР»Р°СЃСЃР°
+     * @param subjectName РЅР°Р·РІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°
+     * @param lessonTime РІСЂРµРјСЏ СѓСЂРѕРєР°
+     * @return СЃРїРёСЃРѕРє СѓСЂРѕРєРѕРІ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р·Р°РґР°РЅРЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј
      */
     @Query("Select l from Lesson l " +
             "where (:teacherName = '' or l.teacher.name = :teacherName)" +
@@ -37,14 +37,14 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
                                         @Param("lessonTime") LocalDateTime lessonTime);
 
     /**
-     * Метод для поиска уроков преподавателя в заданном промежутке времени.
+     * РњРµС‚РѕРґ РґР»СЏ РїРѕРёСЃРєР° СѓСЂРѕРєРѕРІ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЏ РІ Р·Р°РґР°РЅРЅРѕРј РїСЂРѕРјРµР¶СѓС‚РєРµ РІСЂРµРјРµРЅРё.
      *
-     * @param teacherName имя преподавателя
-     * @param className имя класса
-     * @param subjectName название предмета
-     * @param lessonTimeFrom начало промежутка времени
-     * @param lessonTimeTo конец промежутка времени
-     * @return список уроков, соответствующих заданным параметрам
+     * @param teacherName РёРјСЏ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЏ
+     * @param className РёРјСЏ РєР»Р°СЃСЃР°
+     * @param subjectName РЅР°Р·РІР°РЅРёРµ РїСЂРµРґРјРµС‚Р°
+     * @param lessonTimeFrom РЅР°С‡Р°Р»Рѕ РїСЂРѕРјРµР¶СѓС‚РєР° РІСЂРµРјРµРЅРё
+     * @param lessonTimeTo РєРѕРЅРµС† РїСЂРѕРјРµР¶СѓС‚РєР° РІСЂРµРјРµРЅРё
+     * @return СЃРїРёСЃРѕРє СѓСЂРѕРєРѕРІ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р·Р°РґР°РЅРЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј
      */
     @Query("Select l from Lesson l " +
             "where (l.teacher.name = :teacherName)" +
@@ -58,12 +58,12 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
                                                    @Param("lessonTimeTo") LocalDateTime lessonTimeTo);
 
     /**
-     * Метод для поиска всех уроков преподавателя в заданном промежутке времени.
+     * РњРµС‚РѕРґ РґР»СЏ РїРѕРёСЃРєР° РІСЃРµС… СѓСЂРѕРєРѕРІ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЏ РІ Р·Р°РґР°РЅРЅРѕРј РїСЂРѕРјРµР¶СѓС‚РєРµ РІСЂРµРјРµРЅРё.
      *
-     * @param teacherName имя преподавателя
-     * @param lessonTimeFrom начало промежутка времени
-     * @param lessonTimeTo конец промежутка времени
-     * @return список уроков, соответствующих заданным параметрам
+     * @param teacherName РёРјСЏ РїСЂРµРїРѕРґР°РІР°С‚РµР»СЏ
+     * @param lessonTimeFrom РЅР°С‡Р°Р»Рѕ РїСЂРѕРјРµР¶СѓС‚РєР° РІСЂРµРјРµРЅРё
+     * @param lessonTimeTo РєРѕРЅРµС† РїСЂРѕРјРµР¶СѓС‚РєР° РІСЂРµРјРµРЅРё
+     * @return СЃРїРёСЃРѕРє СѓСЂРѕРєРѕРІ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р·Р°РґР°РЅРЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј
      */
     @Query("Select l from Lesson l " +
             "where (l.teacher.name = :teacherName)" +
@@ -73,11 +73,11 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
                                                 @Param("lessonTimeTo") LocalDateTime lessonTimeTo);
 
     /**
-     * Метод для получения расписания ученика на заданную дату.
+     * РњРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЂР°СЃРїРёСЃР°РЅРёСЏ СѓС‡РµРЅРёРєР° РЅР° Р·Р°РґР°РЅРЅСѓСЋ РґР°С‚Сѓ.
      *
-     * @param studentId ID ученика
-     * @param lessonDate дата урока
-     * @return список уроков, соответствующих заданным параметрам
+     * @param studentId ID СѓС‡РµРЅРёРєР°
+     * @param lessonDate РґР°С‚Р° СѓСЂРѕРєР°
+     * @return СЃРїРёСЃРѕРє СѓСЂРѕРєРѕРІ, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёС… Р·Р°РґР°РЅРЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј
      */
     @Query("select l from Lesson l join l.studentClass.students s where s.id = :studentId and "
             + " DATE(l.lessonTime) = :lessonDate")

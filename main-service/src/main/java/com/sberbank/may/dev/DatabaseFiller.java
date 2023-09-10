@@ -20,9 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
-@Profile(value = "dev")
 @Configuration
 @RequiredArgsConstructor
 public class DatabaseFiller {
@@ -48,6 +46,8 @@ public class DatabaseFiller {
                 Role.ROLE_TEACHER);
         User teacher2 = new User(null, "Учитель2", "Пароль", "test2@mail.ru", "+79995363452",
                 Role.ROLE_TEACHER);
+        User teacher3 = new User(null, "Учитель3", "Пароль", "test3@mail.ru", "+79995363453",
+                Role.ROLE_TEACHER);
         User parent = new User(null, "Родитель", "Пароль", "testParent@mail.ru", "+79992453580",
                 Role.ROLE_PARENT);
         User parent1 = new User(null, "Родитель1", "Пароль", "testParent1@mail.ru", "+79992453581",
@@ -70,6 +70,9 @@ public class DatabaseFiller {
         Predmet predmet2 = new Predmet();
         predmet2.setTitle("Русский язык");
         predmet2 = predmetRepository.saveAndFlush(predmet2);
+        Predmet predmet3 = new Predmet();
+        predmet3.setTitle("Физкультура");
+        predmet3 = predmetRepository.saveAndFlush(predmet3);
         StudentClass studentClass = new StudentClass();
         studentClass.setTitle("5А");
         studentClassRepository.saveAndFlush(studentClass);
@@ -94,6 +97,16 @@ public class DatabaseFiller {
         student2.setStudentClass(studentClass1);
         student2.setName("Студент2");
         student2 = studentRepository.saveAndFlush(student2);
+        Student student3 = new Student();
+        student3.setUser(Set.of(parent1));
+        student3.setStudentClass(studentClass);
+        student3.setName("Студент3");
+        studentRepository.saveAndFlush(student3);
+        Student student4 = new Student();
+        student4.setUser(Set.of(parent2));
+        student4.setStudentClass(studentClass);
+        student4.setName("Студент4");
+        studentRepository.saveAndFlush(student4);
         Homework homework = new Homework();
         homework.setDescription("Ничего не задано");
         homework = homeworkRepository.saveAndFlush(homework);
@@ -101,20 +114,51 @@ public class DatabaseFiller {
         lesson.setPredmet(predmet);
         lesson.setTeacher(teacher);
         lesson.setStudentClass(studentClass);
-        lesson.setLessonTime(LocalDateTime.now().plusDays(1));
+        lesson.setLessonTime(LocalDateTime.of(2023,9, 11, 9, 0));
         lesson.setHomework(homework);
         lessonRepository.save(lesson);
         Lesson lesson1 = new Lesson();
         lesson1.setPredmet(predmet1);
         lesson1.setTeacher(teacher1);
-        lesson1.setStudentClass(studentClass1);
-        lesson1.setLessonTime(LocalDateTime.now());
+        lesson1.setStudentClass(studentClass);
+        lesson1.setLessonTime(LocalDateTime.of(2023,9, 11, 9, 55));
         lesson1.setHomework(homework);
         lessonRepository.save(lesson1);
+        Lesson lesson2 = new Lesson();
+        lesson2.setPredmet(predmet2);
+        lesson2.setTeacher(teacher2);
+        lesson2.setStudentClass(studentClass);
+        lesson2.setLessonTime(LocalDateTime.of(2023,9, 11, 10, 50));
+        lesson2.setHomework(homework);
+        lessonRepository.save(lesson2);
+        Lesson lesson3 = new Lesson();
+        lesson3.setPredmet(predmet3);
+        lesson3.setTeacher(teacher2);
+        lesson3.setStudentClass(studentClass);
+        lesson3.setLessonTime(LocalDateTime.of(2023,9, 11, 12, 10));
+        lesson3.setHomework(homework);
+        lessonRepository.save(lesson3);
+        Lesson lesson4 = new Lesson();
+        lesson4.setPredmet(predmet);
+        lesson4.setTeacher(teacher);
+        lesson4.setStudentClass(studentClass);
+        lesson4.setLessonTime(LocalDateTime.of(2023,9, 11, 13, 0));
+        lesson4.setHomework(homework);
+        lessonRepository.save(lesson4);
         Mark mark = new Mark();
         mark.setLesson(lesson);
         mark.setStudent(student);
         mark.setValue(5);
         markRepository.saveAndFlush(mark);
+        Mark mark1 = new Mark();
+        mark1.setLesson(lesson1);
+        mark1.setStudent(student);
+        mark1.setValue(3);
+        markRepository.saveAndFlush(mark1);
+        Mark mark3 = new Mark();
+        mark3.setLesson(lesson4);
+        mark3.setStudent(student);
+        mark3.setValue(4);
+        markRepository.saveAndFlush(mark3);
     }
 }

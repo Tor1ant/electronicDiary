@@ -38,5 +38,3 @@ logging:
       orm:
         jpa:
           JpaTransactionManager: DEBUG
-url:
-  report: "http://localhost:7070"

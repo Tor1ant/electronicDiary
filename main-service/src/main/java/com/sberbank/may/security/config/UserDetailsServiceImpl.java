@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                             "Пользователь с phone " +  name + " не найден"));
 
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
+                .withUsername(user.getPhone())
                 .password(user.getPassword())
                 .authorities(user.getRole().getAuthority())
                 .build();

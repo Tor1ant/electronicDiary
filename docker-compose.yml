@@ -14,8 +14,6 @@ services:
       - DB_NAME=ElectronicDiary
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
-      - STATS_SERVER_URL=http://stats-server:8080
-      - URL_REPORT
   main-db:
     image: postgres:14-alpine
     container_name: Main_Service_Db
@@ -43,4 +41,4 @@ services:
     ports:
       - "7070:7070"
     environment:
-      - REPORT_SERVICE_URL=http://notification-service:7070
+      - URL_REPORT_SERVICE=http://report-service:7070
