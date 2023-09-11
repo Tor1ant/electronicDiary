@@ -34,8 +34,9 @@ public class StudentServiceImpl implements StudentService {
     private final LessonRepository lessonRepository;
     private final MarkRepository markRepository;
 
+    @Value("${services.reportUrl:http://report-service:7070}")
     private static final String URL_REPORT_SERVICE = "http://report-service:7070";
-    private static final String URL_REPORT_SERVICE_LOCAL = "http://localhost:7070";
+  //  private static final String URL_REPORT_SERVICE_LOCAL = "http://localhost:7070";
 
     @Autowired
     private WebClient.Builder webClientBuilder;

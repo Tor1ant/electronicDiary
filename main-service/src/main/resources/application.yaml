@@ -38,3 +38,6 @@ logging:
       orm:
         jpa:
           JpaTransactionManager: DEBUG
+
+services:
+  reportUrl: http://report-service:7070
