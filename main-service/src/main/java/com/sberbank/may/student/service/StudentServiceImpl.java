@@ -34,9 +34,9 @@ public class StudentServiceImpl implements StudentService {
     private final LessonRepository lessonRepository;
     private final MarkRepository markRepository;
 
-    @Value("${services.reportUrl:http://report-service:7070}")
-    private static final String URL_REPORT_SERVICE = "http://report-service:7070";
-  //  private static final String URL_REPORT_SERVICE_LOCAL = "http://localhost:7070";
+    @Value("${services.reportUrl}")
+    private String URL_REPORT_SERVICE;
+    private static final String URL_REPORT_SERVICE_LOCAL = "http://localhost:7070";
 
     @Autowired
     private WebClient.Builder webClientBuilder;
@@ -130,14 +130,13 @@ public class StudentServiceImpl implements StudentService {
     @SneakyThrows
     @Override
     public ResponseEntity<byte[]> getAvgMarkReport(Long studentId, Long predmetId, LocalDateTime lessonTimeFrom,
-                                                   LocalDateTime lessonTimeTo) {
+            LocalDateTime lessonTimeTo) {
 
         List<Student> students = studentRepository.searchAllStudentsOnLesson(predmetId)
                 .orElse(Collections.emptyList());
 
         ReportData reportData = new ReportData();
         reportData.setReportItems(new ArrayList<>());
-
 
         for (Student student : students) {
             List<Mark> studentMarks = markRepository.findStudentMarkByPredmetAndDates(student.getId(), lessonTimeFrom,

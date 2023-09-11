@@ -98,15 +98,15 @@ public class DatabaseFiller {
         student2.setName("Студент2");
         student2 = studentRepository.saveAndFlush(student2);
         Student student3 = new Student();
-        student3.setUser(Set.of(parent1));
+/*        student3.setUser(Set.of(parent1));
         student3.setStudentClass(studentClass);
         student3.setName("Студент3");
-        studentRepository.saveAndFlush(student3);
-        Student student4 = new Student();
+        studentRepository.saveAndFlush(student3);*/
+/*        Student student4 = new Student();
         student4.setUser(Set.of(parent2));
         student4.setStudentClass(studentClass);
         student4.setName("Студент4");
-        studentRepository.saveAndFlush(student4);
+        studentRepository.saveAndFlush(student4);*/
         Homework homework = new Homework();
         homework.setDescription("Ничего не задано");
         homework = homeworkRepository.saveAndFlush(homework);

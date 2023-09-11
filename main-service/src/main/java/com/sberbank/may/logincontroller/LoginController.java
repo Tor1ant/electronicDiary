@@ -23,12 +23,16 @@ public class LoginController {
         String role;
         if (auth != null) {
             role = auth.getAuthorities().iterator().next().getAuthority();
-            if (role.equals("ROLE_ADMIN")) {
-                return "redirect:/admin";
-            } else if (role.equals("ROLE_TEACHER")) {
-                return "redirect:/teacher";
-            } else if (role.equals("ROLE_PARENT")) {
-                return "redirect:/parent";
+            switch (role) {
+                case "ROLE_ADMIN" -> {
+                    return "redirect:/admin";
+                }
+                case "ROLE_TEACHER" -> {
+                    return "redirect:/teacher";
+                }
+                case "ROLE_PARENT" -> {
+                    return "redirect:/parent";
+                }
             }
         }
         return "redirect:/login?error";
